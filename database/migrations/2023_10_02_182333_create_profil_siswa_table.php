@@ -22,8 +22,8 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->string('fotoSiswa');
             // Foreign Key Section - START
-            $table->unsignedBigInteger('id_users');
-            $table->foreign('id_users')->references('id_users')->on('users');
+            $table->unsignedBigInteger('id');
+            $table->foreign('id')->references('id')->on('users');
             
             $table->timestamps();
         });

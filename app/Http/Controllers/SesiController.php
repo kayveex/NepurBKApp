@@ -24,7 +24,7 @@ class SesiController extends Controller
             'username' => $request->username,
             'password' => $request->password
         ];
-        if (Auth::attempt($info_login)) {
+        if (Auth::attempt($info_login, true)) {
             return redirect('admin');
         }else {
             return redirect('')->withErrors('Username dan password yang dimasukkan tidak valid!')->withInput();

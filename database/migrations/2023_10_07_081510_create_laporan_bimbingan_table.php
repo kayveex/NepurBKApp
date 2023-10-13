@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_tahunAjar');
             $table->foreign('id_tahunAjar')->references('id_tahunAjar')->on('tahun_ajar');
 
-            $table->unsignedBigInteger('id_users');
-            $table->foreign('id_users')->references('id_users')->on('users');
+            $table->unsignedBigInteger('id');
+            $table->foreign('id')->references('id')->on('users');
 
         
             $table->timestamps();

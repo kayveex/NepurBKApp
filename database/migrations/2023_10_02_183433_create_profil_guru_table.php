@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('fotoGuruBK');
 
             // Foreign Key Section - START
-            $table->unsignedBigInteger('id_users');
-            $table->foreign('id_users')->references('id_users')->on('users');
+            $table->unsignedBigInteger('id');
+            $table->foreign('id')->references('id')->on('users');
             // END
             $table->timestamps();
         });

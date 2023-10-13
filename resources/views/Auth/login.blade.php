@@ -62,7 +62,7 @@
                                                 class="form-control form-control-user" id="Password"
                                                 placeholder="Password">
                                         </div>
-                                        <button class="btn btn-primary btn-user btn-block">Masuk</button>
+                                        <button class="btn btn-primary btn-user btn-block" type="submit">Masuk</button>
                                     </form>
                                     <hr>
                                 </div>
