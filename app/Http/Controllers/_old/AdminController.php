@@ -11,5 +11,6 @@ class AdminController extends Controller
         echo "Halo, Selamat Datang";
         // echo Auth::user()-> username;
         echo "<h1>" . Auth::user()->username . "</h1>";
+        echo "<a href='/logout'> Logout ! </a>";
     }
 }

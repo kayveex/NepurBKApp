@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Selamat Datang di Aplikasi SIM-BK SMKN 1 Purwakarta">
+    <link rel="icon" href="{{ asset('assets/nepurfav.ico') }}" type="image/x-icon">
     <meta name="author" content="">
 
-    <title>SIMBK SMKN 1 Purwakarta - Login</title>
+    <title>SIMBK Nepur - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

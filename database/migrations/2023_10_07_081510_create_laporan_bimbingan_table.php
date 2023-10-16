@@ -25,6 +25,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id');
             $table->foreign('id')->references('id')->on('users');
 
+            $table->unsignedBigInteger('nomorSiswa');
+            $table->foreign('nomorSiswa')->references('nomorSiswa')->on('profil_siswa');
+
         
             $table->timestamps();
         });
