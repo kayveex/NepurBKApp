@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\SesiController;
+use App\Http\Controllers\TahunAjarController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +26,18 @@ Route::middleware(['guest'])->group(function() {
 
 Auth::routes();
 
-// Dari RedirectIfAuthenticated Class -> Dirombak jadi ke /admin
+// Dari RedirectIfAuthenticated Class -> Dirombak jadi ke /admin - START
 Route::get('/home', function() {
     return redirect('/beranda');
 });
+// END
 
 Route::middleware(['auth'])->group(function() {
-    // Route::get('/admin',[AdminController::class,'index']);
     Route::get('/beranda',[BerandaController::class,'index']);
     Route::get('/logout',[SesiController::class,'logout']);
+
+    // CRUD TahunAjar - Start
+    Route::resource('tahun-ajar',TahunAjarController::class);
 
     // Route Error 404
     Route::fallback(function () {

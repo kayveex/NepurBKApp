@@ -8836,7 +8836,7 @@ button.bg-dark:hover {
     color: #fff !important;
 }
 .text-primary {
-    color: #4e73df !important;
+    color: #00293c !important;
 }
 a.text-primary:focus,
 a.text-primary:hover {
@@ -9224,7 +9224,7 @@ a:focus {
     justify-content: center;
 }
 .border-left-primary {
-    border-left: 0.25rem solid #4e73df !important;
+    border-left: 0.25rem solid #00293c !important;
 }
 .border-bottom-primary {
     border-bottom: 0.25rem solid #4e73df !important;

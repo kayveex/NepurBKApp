@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/beranda">
         <div class="sidebar-brand-icon ">
             {{-- <i class="fa-solid fa-house-signal"></i> --}}
             <img src="{{ asset('assets/nepurside.png') }}" alt="logosmall" style="height: 32px">
@@ -39,12 +39,12 @@
     <li class="nav-item">
         <a class="nav-link" href="">
             <i class="fa-solid fa-person-chalkboard"></i>
-            <span>List Guru</span></a>
+            <span>List Guru BK</span></a>
     </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="/tahun-ajar">
             <i class="fa-solid fa-calendar-week"></i>
             <span>Tahun Ajar</span></a>
     </li>
