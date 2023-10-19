@@ -10,5 +10,6 @@ class TahunAjar extends Model
     use HasFactory;
 
     protected $table ='tahun_ajar';
+    protected $primaryKey = 'id'; //Ini buat ngasih tau PrimaryKey nya namanya apa
     protected $fillable =['tahun_ajar_siswa'];
 }

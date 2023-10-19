@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profil_siswa', function (Blueprint $table) {
-            $table->id('nomorSiswa');
+            $table->id();
             $table->string('namaSiswa');
             $table->integer('tahunMasuk');
             $table->integer('tahunLulus');
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->string('fotoSiswa');
             // Foreign Key Section - START
-            $table->unsignedBigInteger('id');
-            $table->foreign('id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             
             $table->timestamps();
         });

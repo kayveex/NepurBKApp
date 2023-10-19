@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prestasi_siswa', function (Blueprint $table) {
-            $table->id('id_prestasi');
+            $table->id();
             $table->year('tahunPencapaian');
             $table->enum('bidangPrestasi', ['akademik', 'non-akademik']);
             $table->text('deskripsi');
@@ -20,8 +20,8 @@ return new class extends Migration
             $table->enum('posisiJuara', ['I', 'II', 'III', 'harapan']);
             $table->string('buktiPrestasi');
             // FOREIGN KEY - START
-            $table->unsignedBigInteger('nomorSiswa');
-            $table->foreign('nomorSiswa')->references('nomorSiswa')->on('profil_siswa');
+            $table->unsignedBigInteger('siswa_id');
+            $table->foreign('siswa_id')->references('id')->on('profil_siswa');
             // END
             $table->timestamps();
         });

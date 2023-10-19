@@ -5,23 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\TahunAjar;
 use Illuminate\Http\Request;
 
-class TahunAjarController extends Controller
+class TAController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tahun_ajar = TahunAjar::all();
+        $tahun_ajar = TahunAjar::orderBy('id', 'ASC') ->get();
         return view('Fitur.tahunAjar.index',compact('tahun_ajar'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -39,39 +31,14 @@ class TahunAjarController extends Controller
 
         return redirect('/tahun-ajar');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // 
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $tahun_ajar = TahunAjar::find($id);
-        $tahun_ajar = delete();
+        $tahun_ajar->delete();
         return redirect('/tahun-ajar');
+
     }
 }

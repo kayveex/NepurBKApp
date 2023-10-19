@@ -12,21 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('laporan_bimbingan', function (Blueprint $table) {
-            $table->id('id_laporanBimbingan');
+            $table->id();
             $table->enum('semester', ['ganjil', 'genap']);
             $table->enum('bidangLayanan', ['pribadi', 'sosial', 'belajar', 'karir']);
             $table->date('tanggalBimbingan');
             $table->text('keluhan');
             $table->text('solusi');
             // FOREIGN KEY - START
-            $table->unsignedBigInteger('id_tahunAjar');
-            $table->foreign('id_tahunAjar')->references('id_tahunAjar')->on('tahun_ajar');
+            $table->unsignedBigInteger('tahunAjar_id');
+            $table->foreign('tahunAjar_id')->references('id')->on('tahun_ajar');
 
-            $table->unsignedBigInteger('id');
-            $table->foreign('id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('nomorSiswa');
-            $table->foreign('nomorSiswa')->references('nomorSiswa')->on('profil_siswa');
+            $table->unsignedBigInteger('siswa_id');
+            $table->foreign('siswa_id')->references('id')->on('profil_siswa');
 
         
             $table->timestamps();

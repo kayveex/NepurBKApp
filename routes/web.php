@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\SesiController;
+use App\Http\Controllers\TAController;
 use App\Http\Controllers\TahunAjarController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,12 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/logout',[SesiController::class,'logout']);
 
     // CRUD TahunAjar - Start
-    Route::resource('tahun-ajar',TahunAjarController::class);
+    Route::get('/tahun-ajar',[TAController::class,'index'])->middleware('userAkses:admin');
+    Route::post('/tahun-ajar/store',[TAController::class,'store'])->middleware('userAkses:admin');
+    Route::delete('/tahun-ajar/{id}/destroy',[TAController::class,'destroy'])->middleware('userAkses:admin');
+
+
+    // End
 
     // Route Error 404
     Route::fallback(function () {
@@ -48,4 +54,8 @@ Route::middleware(['auth'])->group(function() {
 
 
 
+// DUMPCODES
 
+// Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::resource('tahun-ajar',TahunAjarController::class)->middleware('userAkses:admin');
