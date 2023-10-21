@@ -34,25 +34,29 @@ Route::get('/home', function() {
 // END
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/beranda',[BerandaController::class,'index']);
+    Route::get('/beranda', [BerandaController::class,'index'])->name('beranda');
     Route::get('/logout',[SesiController::class,'logout']);
 
     // CRUD TahunAjar - Start
-    Route::get('/tahun-ajar',[TAController::class,'index'])->middleware('userAkses:admin');
+    Route::get('/tahun-ajar',[TAController::class,'index'])->middleware('userAkses:admin') ->name('tahunajar');
     Route::post('/tahun-ajar/store',[TAController::class,'store'])->middleware('userAkses:admin');
     Route::delete('/tahun-ajar/{id}/destroy',[TAController::class,'destroy'])->middleware('userAkses:admin');
 
 
     // End
 
-    // Route Error 404
+    // Route Error 404 - Berfungsi jika memasukkan route ngawur
     Route::fallback(function () {
         return view('errors.404');
     });
 });
 
 
-
+/* 
+Informasi:
+    1. ->name pada tiap route index digunakan untuk menyalakan active button pada sidebar!
+    2. Penggunaan middleware('userAkses) dipakai untuk menentukan fitur ini bisa diakses oleh role siapa saja.
+*/
 
 // DUMPCODES
 

@@ -43,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    // One to One dengan tabel profil_guru
+    public function profilGuru() {
+        return $this->hasOne(ProfilGuru::class, 'user_id', 'id');
+    }
+
+    // One to One dengan tabel profil_siswa
+    public function profilSiswa() {
+        return $this->hasOne(ProfilSiswa::class, 'user_id', 'id');
+    }
 }

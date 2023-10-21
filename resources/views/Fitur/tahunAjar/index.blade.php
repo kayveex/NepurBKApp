@@ -68,7 +68,9 @@
                                 <form action="/tahun-ajar/{{ $item->id }}/destroy" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="submit" class="btn btn-danger my-1" value="Hapus">
+                                    <button type="submit" class="btn btn-danger my-1">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

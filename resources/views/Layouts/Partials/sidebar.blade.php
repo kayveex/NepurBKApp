@@ -13,10 +13,11 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="/beranda">
+    <li class="nav-item {{ Route::is('beranda') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('beranda') }}">
             <i class="fa-solid fa-house-chimney"></i>
-            <span>Beranda</span></a>
+            <span>Beranda</span>
+        </a>
     </li>
     {{-- Feature Restriction Using Ifs --}}
     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru' || Auth::user()->role == 'kepalaSekolah')
@@ -37,15 +38,23 @@
     @endif
 
     @if (Auth::user()->role == 'admin')
-        <li class="nav-item">
-            <a class="nav-link" href="">
-                <i class="fa-solid fa-person-chalkboard"></i>
-                <span>List Guru BK</span></a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item {{ Route::is('tahunajar') ? 'active' : '' }}">
             <a class="nav-link" href="/tahun-ajar">
                 <i class="fa-solid fa-calendar-week"></i>
                 <span>Tahun Ajar</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsedAkun"
+                aria-expanded="true" aria-controls="collapsePages">
+                <i class="fa-solid fa-users"></i>
+                <span>Akun</span></a>
+            </a>
+            <div id="collapsedAkun" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="">Guru BK</a>
+                    <a class="collapse-item" href="">Siswa</a>
+                </div>
+            </div>
         </li>
     @endif
 
