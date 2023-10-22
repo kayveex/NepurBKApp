@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProfilSiswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProfilSiswaController extends Controller
@@ -12,7 +13,10 @@ class ProfilSiswaController extends Controller
      */
     public function index()
     {
-        //
+        $id_userSiswa = Auth::id();
+        $detailProfilSiswa = ProfilSiswa::where('user_id', $id_userSiswa)->first();
+
+        return view('Fitur.ProfilSiswa.index'. ['detailProfilSiswa'=> $detailProfilSiswa]);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AkunSiswaController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\ProfilSiswaController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\TAController;
 use App\Http\Controllers\TahunAjarController;
@@ -41,7 +43,15 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/tahun-ajar',[TAController::class,'index'])->middleware('userAkses:admin') ->name('tahunajar');
     Route::post('/tahun-ajar/store',[TAController::class,'store'])->middleware('userAkses:admin');
     Route::delete('/tahun-ajar/{id}/destroy',[TAController::class,'destroy'])->middleware('userAkses:admin');
+    // End
 
+    // CRUD Akun Siswa - Start
+    Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin') ->name('akunsiswa');
+    Route::post('/akun/akun-siswa/store', [AkunSiswaController::class,'store'])->middleware('userAkses:admin');
+    Route::get('/akun/akun-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:admin');
+    // End
+
+    // CRUD Akun Guru BK - Start
 
     // End
 

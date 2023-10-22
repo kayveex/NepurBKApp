@@ -13,7 +13,7 @@ class ProfilGuruController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::id();
+        //
         
     }
     /**
