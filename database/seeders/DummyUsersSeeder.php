@@ -19,24 +19,6 @@ class DummyUsersSeeder extends Seeder
                 'email' => 'rhesakornelius@gmail.com',
                 'password' =>bcrypt('200902Rhesa'),
                 'role' => 'admin'
-            ],
-            [
-                'username' => 'gurutes',
-                'email' => 'gurutest@gmail.com',
-                'password' =>bcrypt('gurutest'),
-                'role' => 'guru'
-            ],
-            [
-                'username' => 'siswatest',
-                'email' => 'siswatest@gmail.com',
-                'password' =>bcrypt('siswatest'),
-                'role' => 'siswa'
-            ],
-            [
-                'username' => 'kepsek',
-                'email' => 'kepsek@gmail.com',
-                'password' =>bcrypt('kepsek'),
-                'role' => 'kepalaSekolah'
             ]
         ];
         foreach ($userData as $key => $val) {

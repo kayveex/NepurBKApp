@@ -43,7 +43,8 @@
                 <i class="fa-solid fa-calendar-week"></i>
                 <span>Tahun Ajar</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ Route::is('akunSiswa') || Route::is('akunGuru') ? 'active' : '' }}
+        ">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsedAkun"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fa-solid fa-users"></i>
@@ -52,7 +53,8 @@
             <div id="collapsedAkun" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="">Guru BK</a>
-                    <a class="collapse-item" href="">Siswa</a>
+                    <a class="collapse-item {{ Route::is('akunSiswa') ? 'active' : '' }}"
+                        href="/akun/akun-siswa">Siswa</a>
                 </div>
             </div>
         </li>

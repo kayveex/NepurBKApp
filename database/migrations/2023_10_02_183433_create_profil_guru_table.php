@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('alamat', 45);
             $table->string('nomorWA', 32);
             $table->text('fotoGuruBK');
+            $table->string('ulangPassword');
 
             // Foreign Key Section - START
             $table->unsignedBigInteger('user_id');

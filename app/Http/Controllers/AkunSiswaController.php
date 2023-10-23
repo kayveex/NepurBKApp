@@ -13,8 +13,11 @@ class AkunSiswaController extends Controller
      */
     public function index()
     {
+        // $siswas = User::where('role', 'siswa')
+        // ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
+        // ->get();
         $siswas = User::where('role', 'siswa')
-        ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
+        ->with('profilSiswa') // Eager loading untuk mengambil profil siswa
         ->get();
         return view('Fitur.AkunSiswa.index', compact('siswas'));
     }
@@ -32,27 +35,30 @@ class AkunSiswaController extends Controller
             'password' => 'required|min:8|max:16',
             // Validasi dari Model: ProfilSiswa
             'namaSiswa' => 'required|string|max:255',
+            'ulangPassword' => 'required|min:8|max:16',
             'tahunMasuk' => 'required|numeric',
             'tahunLulus' => 'required|numeric',
             'jurusan' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
-            'fotoSiswa' => 'mimes:png,jpg,jpeg|max: 2048'
+            'fotoSiswa' => 'mimes:png,jpg,jpeg|max: 5120'
         ]);
 
         // Simpan Data User
         $user = User::create([
             'username' => $request->input('username'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'password' => $request->input('password'),
             'role' => 'siswa'
         ]);
 
         // Simpan Data ProfilSiswa
         $profilSiswaData = [
+            'id' => $request->input('id'),
             'namaSiswa' => $request->input('namaSiswa'),
             'tahunMasuk' => $request->input('tahunMasuk'),
             'tahunLulus' => $request->input('tahunLulus'),
             'jurusan' => $request->input('jurusan'),
+            'ulangPassword' => $request->input('ulangPassword'),
             'tgl_lahir' => $request->input('tgl_lahir'),
             'user_id' => $user->id,
         ];
@@ -74,9 +80,13 @@ class AkunSiswaController extends Controller
      */
     public function show(string $id)
     {
+        // $siswa = User::where('id', $id)
+        // ->where('role', 'siswa')
+        // ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
+        // ->first();
         $siswa = User::where('id', $id)
         ->where('role', 'siswa')
-        ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
+        ->with('profilSiswa')
         ->first();
 
         // if (!$siswa) {
@@ -123,20 +133,32 @@ class AkunSiswaController extends Controller
         // }
 
         $request->validate([
+            // Validasi dari Model: User
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:8|max:16',
+            // Validasi dari Model: ProfilSiswa
             'namaSiswa' => 'required|string|max:255',
+            'ulangPassword' => 'required|min:8|max:16',
             'tahunMasuk' => 'required|numeric',
             'tahunLulus' => 'required|numeric',
             'jurusan' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
-            'fotoSiswa' => 'mimes:png,jpg,jpeg|max:2048'
+            'fotoSiswa' => 'mimes:png,jpg,jpeg|max:5120'
         ]);
 
         $profilSiswaData = [
+            // Model: User
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            // Model: ProfilSiswa
             'namaSiswa' => $request->input('namaSiswa'),
             'tahunMasuk' => $request->input('tahunMasuk'),
             'tahunLulus' => $request->input('tahunLulus'),
             'jurusan' => $request->input('jurusan'),
             'tgl_lahir' => $request->input('tgl_lahir'),
+            'ulangPassword' => $request->input('ulangPassword'),
             'user_id' => $siswa->id,
         ];
 
@@ -167,16 +189,24 @@ class AkunSiswaController extends Controller
         $user->profilSiswa()->delete();
 
         // Hapus foto jika ada
-        if ($user->image) {
-            $oldImagePath = public_path('FotoSiswa/' . $user->image);
+        if ($user->profilSiswa && $user->profilSiswa->fotoSiswa) {
+            // $oldImagePath = public_path($user->profilSiswa->fotoSiswa);
+            // $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa()->fotoSiswa);
+            // $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa->fotoSiswa);
+            $oldImagePath = public_path($user->profilSiswa->fotoSiswa);
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-        }
+        }        // if ($user->profilSiswa()->fotoSiswa) {
+        //     $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa()->fotoSiswa);
+        //     if (file_exists($oldImagePath)) {
+        //         unlink($oldImagePath);
+        //     }
+        // }
 
-        // Hapus data tanya
+        // Hapus data user
         $user->delete();
 
-        return redirect('/tanyajawab')->with('success', 'Data Pertanyaan berhasil dihapus.');
+        return redirect('/akun/akun-siswa')->with('success', 'Data Pertanyaan berhasil dihapus.');
     }
 }

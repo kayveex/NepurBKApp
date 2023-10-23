@@ -46,9 +46,10 @@ Route::middleware(['auth'])->group(function() {
     // End
 
     // CRUD Akun Siswa - Start
-    Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin') ->name('akunsiswa');
+    Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin') ->name('akunSiswa');
     Route::post('/akun/akun-siswa/store', [AkunSiswaController::class,'store'])->middleware('userAkses:admin');
     Route::get('/akun/akun-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:admin');
+    Route::delete('/akun/akun-siswa/{id}/destroy',[AkunSiswaController::class,'destroy'])->middleware('userAkses:admin');
     // End
 
     // CRUD Akun Guru BK - Start

@@ -21,6 +21,7 @@ return new class extends Migration
             // END
             $table->date('tgl_lahir');
             $table->string('fotoSiswa');
+            $table->string('ulangPassword');
             // Foreign Key Section - START
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

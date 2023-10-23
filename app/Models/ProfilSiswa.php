@@ -12,7 +12,7 @@ class ProfilSiswa extends Model
 
     protected $table ='profil_siswa';
     protected $primaryKey = 'id'; //Ini buat ngasih tau PrimaryKey nya namanya apa
-    protected $fillable =['id','namaSiswa,', 'tahunMasuk','tahunLulus','jurusan','tgl_lahir','fotoSiswa','user_id'];
+    protected $fillable =['id','namaSiswa', 'tahunMasuk','tahunLulus','jurusan','tgl_lahir','fotoSiswa','ulangPassword','user_id'];
     // Mendeklarasikan Relasi
     public function userFromSiswa() {
         return $this->belongsTo(User::class, 'user_id');

@@ -26,7 +26,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/akun/akun-siswa/store" method="post">
+                        <form action="/akun/akun-siswa/store" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
                                 <div class="form-group">
@@ -43,7 +43,7 @@
                                     <label><strong>Email</strong></label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         name="email" id="email" placeholder="">
-                                    @error('username')
+                                    @error('email')
                                         <div class="alert alert-danger">
                                             {{ $message }}
                                         </div>
@@ -59,50 +59,145 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <div class="form-group">
+                                    <label><strong>Ulangi Password</strong></label>
+                                    <input type="password" class="form-control @error('ulangPassword') is-invalid @enderror"
+                                        name="ulangPassword" id="ulangPassword" placeholder="Ulangi Password!">
+                                    @error('ulangPassword')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Nomor Induk Siswa</strong></label>
+                                    <input type="number" class="form-control @error('id') is-invalid @enderror"
+                                        name="id" id="id" placeholder="">
+                                    @error('id')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Nama Siswa</strong></label>
+                                    <input type="text" class="form-control @error('namaSiswa') is-invalid @enderror"
+                                        name="namaSiswa" id="namaSiswa" placeholder="">
+                                    @error('namaSiswa')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Tahun Masuk</strong></label>
+                                    <input type="number" class="form-control @error('tahunMasuk') is-invalid @enderror"
+                                        name="tahunMasuk" id="tahunMasuk" placeholder="">
+                                    @error('tahunMasuk')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Tahun Lulus</strong></label>
+                                    <input type="number" class="form-control @error('tahunLulus') is-invalid @enderror"
+                                        name="tahunLulus" id="tahunLulus" placeholder="">
+                                    @error('tahunLulus')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Jurusan</strong></label>
+                                    <select class="form-control"class="form-control" name="jurusan" id="jurusan">
+                                        <option>-- Pilih Jurusan --</option>
+                                        <option value="TKJ">TKJ</option>
+                                        <option value="DPIB">DPIB</option>
+                                        <option value="TITL">TITL</option>
+                                        <option value="TKRO">TKRO</option>
+                                        <option value="TPM">TPM</option>
+                                        <option value="T.ELIN">T.ELIN</option>
+                                        <option value="TSM">TSM</option>
+                                        <option value="TAV">TAV</option>
+                                        <option value="IOP">IOP</option>
+                                    </select>
+                                    @error('jurusan')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Tanggal Lahir</strong></label>
+                                    <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
+                                        name="tgl_lahir" id="tgl_lahir" placeholder="">
+                                    @error('tgl_lahir')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Upload Foto Siswa (Max: 5 MB)</strong></label>
+                                    <br />
+                                    <input class="input-file-normal" type="file" name="fotoSiswa" id="fotoSiswa" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
-
             <br />
-            <!-- Table -->
-            <table class="table table-bordered">
-                <thead class="thead bg-primary text-white">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tahun Ajar</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($tahun_ajar as $key => $item)
+            <div class="table-responsive">
+                <table class="table table-bordered ">
+                    <thead class="thead bg-primary text-white">
                         <tr>
-                            <th scope="row">{{ $key + 1 }}</th>
-                            <td>{{ $item->tahun_ajar_siswa }}</td>
-                            <td>
-                                <form action="/tahun-ajar/{{ $item->id }}/destroy" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger my-1">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th scope="col">No. Induk</th>
+                            <th scope="col">Nama Siswa</th>
+                            <th scope="col">Jurusan</th>
+                            <th scope="col">Angkatan</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Aksi</th>
                         </tr>
-                    @empty
-                        <div class="alert alert-danger" role="alert">
-                            Data Kosong ! 😢
-                        </div>
-                    @endforelse
+                    </thead>
+                    <tbody>
+                        @forelse ($siswas as $key => $siswa)
+                            <tr>
+                                <th scope="row">{{ $siswa->profilSiswa->id }}</th>
+                                <td>{{ $siswa->profilSiswa->namaSiswa }}</td>
+                                <td>{{ $siswa->profilSiswa->jurusan }}</td>
+                                <td>{{ $siswa->profilSiswa->tahunMasuk }}</td>
+                                <td>{{ $siswa->username }}</td>
+                                <td>{{ $siswa->profilSiswa->ulangPassword }}</td>
+                                <td>
+                                    <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger my-1">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <div class="alert alert-danger" role="alert">
+                                Data Kosong ! 😢
+                            </div>
+                        @endforelse
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>
+
+    <br />
+    <!-- Table -->
 @endsection

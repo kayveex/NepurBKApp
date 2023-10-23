@@ -11,7 +11,7 @@ class ProfilGuru extends Model
 
     protected $table ='profil_guru';
     protected $primaryKey = 'id'; //Ini buat ngasih tau PrimaryKey nya namanya apa
-    protected $fillable =['namaGuruBK,', 'alamat','nomorWA','fotoGuruBK','user_id'];
+    protected $fillable =['namaGuruBK,', 'alamat','nomorWA','fotoGuruBK','ulangPassword','user_id'];
     // Mendeklrasikan Relasi 
     public function userFromGuru() {
         return $this->belongsTo(User::class, 'user_id');

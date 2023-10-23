@@ -9521,7 +9521,7 @@ a:focus {
 }
 .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
-    color: #4e73df;
+    color: #00293c;
     font-weight: 700;
 }
 .sidebar #sidebarToggle {
