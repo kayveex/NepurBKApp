@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
-class DummyUsersSeeder extends Seeder
+class NoHashUsers extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,19 +17,19 @@ class DummyUsersSeeder extends Seeder
             [
                 'username' => 'adminkay',
                 'email' => 'rhesakornelius@gmail.com',
-                'password' =>bcrypt('200902Rhesa'),
+                'password' =>'200902Rhesa',
                 'role' => 'admin'
             ],
             [
                 'username' => 'gurutest',
                 'email' => 'gurutest@gmail.com',
-                'password' =>bcrypt('12345678'),
+                'password' =>'12345678',
                 'role' => 'guru'
             ],
             [
                 'username' => 'kepsektest',
                 'email' => 'kepsektest@gmail.com',
-                'password' =>bcrypt('kepsektest'),
+                'password' =>'kepsektest',
                 'role' => 'kepalaSekolah'
             ],
         ];

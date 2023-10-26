@@ -51,7 +51,7 @@
 
             <br />
             <!-- Table -->
-            <table class="table table-bordered">
+            <table class="table table-bordered text-center">
                 <thead class="thead bg-primary text-white">
                     <tr>
                         <th scope="col">#</th>

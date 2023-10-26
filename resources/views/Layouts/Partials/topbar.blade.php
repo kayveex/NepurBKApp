@@ -14,10 +14,10 @@
                 @if (Auth::user()->role == 'siswa')
                     <img class="img-profile rounded-circle" src="{{ asset(Auth::user()->profilSiswa->fotoSiswa) }}">
                 @endif
-                @if (Auth::user()->role == 'guru')
+                {{-- @if (Auth::user()->role == 'guru')
                     <img class="img-profile rounded-circle" src="{{ asset(Auth::user()->profilGuru->fotoGuruBK) }}">
-                @endif
-                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah')
+                @endif --}}
+                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah' || Auth::user()->role == 'guru')
                     <img class="img-profile rounded-circle" src="{{ asset('assets/hiroles.png') }}">
                 @endif
             </a>

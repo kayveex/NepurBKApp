@@ -153,7 +153,7 @@
                 </div>
             </div>
             <br />
-            <div class="table-responsive">
+            <div class="table-responsive text-center">
                 <table class="table table-bordered ">
                     <thead class="thead bg-primary text-white">
                         <tr>
@@ -175,11 +175,17 @@
                                 <td>{{ $siswa->profilSiswa->tahunMasuk }}</td>
                                 <td>{{ $siswa->username }}</td>
                                 <td>{{ $siswa->profilSiswa->ulangPassword }}</td>
-                                <td>
+                                <td class="text-center">
                                     <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger my-1">
+                                        <a href="/akun/akun-siswa/{{ $siswa->id }}" class="btn btn-info my-1 px-3">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                        <a href="/akun/akun-siswa/{{ $siswa->id }}" class="btn btn-warning my-1 px-2">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        </a>
+                                        <button type="submit" class="btn btn-danger my-1 ">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
                                     </form>
@@ -199,5 +205,4 @@
     </div>
 
     <br />
-    <!-- Table -->
 @endsection
