@@ -176,13 +176,15 @@
                                 <td>{{ $siswa->username }}</td>
                                 <td>{{ $siswa->profilSiswa->ulangPassword }}</td>
                                 <td class="text-center">
-                                    <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST">
+                                    <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
                                         <a href="/akun/akun-siswa/{{ $siswa->id }}" class="btn btn-info my-1 px-3">
                                             <i class="fa-solid fa-info"></i>
                                         </a>
-                                        <a href="/akun/akun-siswa/{{ $siswa->id }}" class="btn btn-warning my-1 px-2">
+                                        <a href="/akun/akun-siswa/{{ $siswa->id }}/edit"
+                                            class="btn btn-warning my-1 px-2">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </a>
                                         <button type="submit" class="btn btn-danger my-1 ">

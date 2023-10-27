@@ -34,6 +34,7 @@ class AkunSiswaController extends Controller
             'email' => 'required',
             'password' => 'required|min:8|max:16',
             // Validasi dari Model: ProfilSiswa
+            'id' => 'required',
             'namaSiswa' => 'required|string|max:255',
             'ulangPassword' => 'required|min:8|max:16',
             'tahunMasuk' => 'required|numeric',
@@ -138,6 +139,7 @@ class AkunSiswaController extends Controller
             'email' => 'required',
             'password' => 'required|min:8|max:16',
             // Validasi dari Model: ProfilSiswa
+            'id' => 'required',
             'namaSiswa' => 'required|string|max:255',
             'ulangPassword' => 'required|min:8|max:16',
             'tahunMasuk' => 'required|numeric',
@@ -147,35 +149,60 @@ class AkunSiswaController extends Controller
             'fotoSiswa' => 'mimes:png,jpg,jpeg|max:5120'
         ]);
 
+        // $user = User::create([
+        //     'username' => $request->input('username'),
+        //     'email' => $request->input('email'),
+        //     'password' => $request->input('password'),
+        //     'role' => 'siswa'
+        // ]);
+
+            // Mengupdate user
+    $siswa->update([
+        'username' => $request->input('username'),
+        'email' => $request->input('email'),
+        'password' => $request->input('password'),
+    ]);
+
         $profilSiswaData = [
             // Model: User
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            // 'username' => $request->input('username'),
+            // 'email' => $request->input('email'),
+            // 'password' => $request->input('password'),
             // Model: ProfilSiswa
+            'id' => $request->input('id'),
             'namaSiswa' => $request->input('namaSiswa'),
             'tahunMasuk' => $request->input('tahunMasuk'),
             'tahunLulus' => $request->input('tahunLulus'),
             'jurusan' => $request->input('jurusan'),
             'tgl_lahir' => $request->input('tgl_lahir'),
             'ulangPassword' => $request->input('ulangPassword'),
-            'user_id' => $siswa->id,
+            'user_id' => $siswa->id
         ];
 
         // Memeriksa apakah ada file foto baru yang diunggah
         if ($request->hasFile('fotoSiswa')) {
             $fotoSiswa = $request->file('fotoSiswa');
-            $imageName = time() . '.' . $fotoSiswa->extension();
-            $fotoSiswa->move(public_path('FotoSiswa'), $imageName);
-            $profilSiswaData['fotoSiswa'] = 'FotoSiswa/' . $imageName;
+            $imageNameSiswa = time() . '.' . $fotoSiswa->extension();
+            $fotoSiswa->move(public_path('FotoSiswa'), $imageNameSiswa);
+            $profilSiswaData['fotoSiswa'] = 'FotoSiswa/' . $imageNameSiswa;
         } else {
             // Jika tidak ada foto baru, gunakan foto lama
-            $profilSiswaData['fotoSiswa'] = $siswa->fotoSiswa;
+            $profilSiswaData['fotoSiswa'] = $siswa->profilSiswa->fotoSiswa;
         }
 
-        ProfilSiswa::where('user_id', $siswa->id)->update($profilSiswaData);
+            // Mengupdate atau membuat ProfilSiswa
+        if ($siswa->profilSiswa) {
+            $siswa->profilSiswa->update($profilSiswaData);
+        } else {
+            ProfilSiswa::create($profilSiswaData);
+        }
+        // return redirect()->route('/akun/akun-siswa', $siswa->id)->with('success', 'Data siswa berhasil diperbarui');
+        return redirect('/akun/akun-siswa')->with('success', 'Data Siswa berhasil diperbarui.');
 
-        return redirect()->route('/akun/akun-siswa', $siswa->id)->with('success', 'Data siswa berhasil diperbarui');
+        // ProfilSiswa::where('user_id', $siswa->id)->update($profilSiswaData);
+        // // ProfilSiswa::create($profilSiswaData);
+
+        // return redirect()->route('/akun/akun-siswa', $siswa->id)->with('success', 'Data siswa berhasil diperbarui');
     }
 
     /**
@@ -207,6 +234,6 @@ class AkunSiswaController extends Controller
         // Hapus data user
         $user->delete();
 
-        return redirect('/akun/akun-siswa')->with('success', 'Data Pertanyaan berhasil dihapus.');
+        return redirect('/akun/akun-siswa')->with('success', 'Data Siswa berhasil dihapus.');
     }
 }
