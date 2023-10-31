@@ -51,7 +51,7 @@
 
             <br />
             <!-- Table -->
-            <table class="table table-bordered text-center">
+            <table class="table table-bordered text-center" id="tahunAjar">
                 <thead class="thead bg-primary text-white">
                     <tr>
                         <th scope="col">#</th>
@@ -86,3 +86,16 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@endpush
+
+@push('scripts')
+    <script>
+        $(function() {
+            $("#tahunAjar").DataTable();
+        });
+    </script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+@endpush

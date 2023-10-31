@@ -13,9 +13,6 @@ class AkunSiswaController extends Controller
      */
     public function index()
     {
-        // $siswas = User::where('role', 'siswa')
-        // ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
-        // ->get();
         $siswas = User::where('role', 'siswa')
         ->with('profilSiswa') // Eager loading untuk mengambil profil siswa
         ->get();
@@ -81,18 +78,10 @@ class AkunSiswaController extends Controller
      */
     public function show(string $id)
     {
-        // $siswa = User::where('id', $id)
-        // ->where('role', 'siswa')
-        // ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
-        // ->first();
         $siswa = User::where('id', $id)
         ->where('role', 'siswa')
         ->with('profilSiswa')
         ->first();
-
-        // if (!$siswa) {
-        //     return redirect()->route('siswa.index')->with('error', 'Siswa tidak ditemukan');
-        // }
 
         return view('Fitur.AkunSiswa.detail', compact('siswa'));
     }
@@ -107,10 +96,6 @@ class AkunSiswaController extends Controller
         ->with('profilSiswa')
         ->first();
 
-        // if (!$siswa) {
-        //     return redirect()->route('siswa.index')->with('error', 'Siswa tidak ditemukan');
-        // }
-
         return view('Fitur.AkunSiswa.update', compact('siswa'));
     }
 
@@ -119,19 +104,10 @@ class AkunSiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $siswa = User::where('id', $id)
-        // ->where('role', 'siswa')
-        // ->join('profil_siswa', 'users.id', '=', 'profil_siswa.user_id')
-        // ->first();
-
         $siswa = User::where('id', $id)
         ->where('role', 'siswa')
         ->with('profilSiswa')
         ->first();
-
-        // if (!$siswa) {
-        //     return redirect()->route('siswa.index')->with('error', 'Siswa tidak ditemukan');
-        // }
 
         $request->validate([
             // Validasi dari Model: User
@@ -149,25 +125,14 @@ class AkunSiswaController extends Controller
             'fotoSiswa' => 'mimes:png,jpg,jpeg|max:5120'
         ]);
 
-        // $user = User::create([
-        //     'username' => $request->input('username'),
-        //     'email' => $request->input('email'),
-        //     'password' => $request->input('password'),
-        //     'role' => 'siswa'
-        // ]);
-
-            // Mengupdate user
-    $siswa->update([
-        'username' => $request->input('username'),
-        'email' => $request->input('email'),
-        'password' => $request->input('password'),
+    // Mengupdate user
+        $siswa->update([
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
     ]);
 
         $profilSiswaData = [
-            // Model: User
-            // 'username' => $request->input('username'),
-            // 'email' => $request->input('email'),
-            // 'password' => $request->input('password'),
             // Model: ProfilSiswa
             'id' => $request->input('id'),
             'namaSiswa' => $request->input('namaSiswa'),
@@ -198,11 +163,6 @@ class AkunSiswaController extends Controller
         }
         // return redirect()->route('/akun/akun-siswa', $siswa->id)->with('success', 'Data siswa berhasil diperbarui');
         return redirect('/akun/akun-siswa')->with('success', 'Data Siswa berhasil diperbarui.');
-
-        // ProfilSiswa::where('user_id', $siswa->id)->update($profilSiswaData);
-        // // ProfilSiswa::create($profilSiswaData);
-
-        // return redirect()->route('/akun/akun-siswa', $siswa->id)->with('success', 'Data siswa berhasil diperbarui');
     }
 
     /**
@@ -212,24 +172,18 @@ class AkunSiswaController extends Controller
     {
         $user = User::find($id);
 
-        // Hapus profilSiswa terkait
-        $user->profilSiswa()->delete();
+
 
         // Hapus foto jika ada
         if ($user->profilSiswa && $user->profilSiswa->fotoSiswa) {
-            // $oldImagePath = public_path($user->profilSiswa->fotoSiswa);
-            // $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa()->fotoSiswa);
-            // $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa->fotoSiswa);
             $oldImagePath = public_path($user->profilSiswa->fotoSiswa);
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-        }        // if ($user->profilSiswa()->fotoSiswa) {
-        //     $oldImagePath = public_path('FotoSiswa/' . $user->profilSiswa()->fotoSiswa);
-        //     if (file_exists($oldImagePath)) {
-        //         unlink($oldImagePath);
-        //     }
-        // }
+        }
+
+        // Hapus profilSiswa terkait
+        $user->profilSiswa()->delete();
 
         // Hapus data user
         $user->delete();

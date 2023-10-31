@@ -52,7 +52,8 @@
             </a>
             <div id="collapsedAkun" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="">Guru BK</a>
+                    <a class="collapse-item {{ Route::is('akunGuru') ? 'active' : '' }}" href="/akun/akun-guru">Guru
+                        BK</a>
                     <a class="collapse-item {{ Route::is('akunSiswa') ? 'active' : '' }}"
                         href="/akun/akun-siswa">Siswa</a>
                 </div>

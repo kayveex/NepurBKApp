@@ -36,9 +36,9 @@
                         </div>
                         <div class="form-group">
                             <label><strong>Email</strong></label>
-                            <input type="email" class="form-control @error('username') is-invalid @enderror"
-                                name="email" id="email" placeholder="" value="{{ $siswa->email }}">
-                            @error('username')
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                                id="email" placeholder="" value="{{ $siswa->email }}">
+                            @error('email')
                                 <div class="alert alert-danger">
                                     {{ $message }}
                                 </div>

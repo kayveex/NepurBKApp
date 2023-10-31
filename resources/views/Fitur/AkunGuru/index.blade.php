@@ -1,22 +1,20 @@
 {{-- Template Utama --}}
 @extends('Layouts.master')
 
-{{-- Bagian: Content  --}}
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Akun Siswa</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Akun Guru BK</h6>
         </div>
         <div class="card-body">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary d-flex align-items-center" data-toggle="modal"
-                data-target="#modalAkunSiswa">
+                data-target="#modalAkunGuru">
                 <i class="fa-solid fa-circle-plus"></i>
                 <p class="mb-0 ml-2">Tambahkan</p>
             </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modalAkunSiswa" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <br>
+            <div class="modal fade" id="modalAkunGuru" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered ">
                     <div class="modal-content">
@@ -26,7 +24,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/akun/akun-siswa/store" method="POST" enctype="multipart/form-data">
+                        <form action="/akun/akun-guru/store" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
                                 <div class="form-group">
@@ -70,7 +68,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Nomor Induk Siswa</strong></label>
+                                    <label><strong>NUPTK</strong></label>
                                     <input type="number" class="form-control @error('id') is-invalid @enderror"
                                         name="id" id="id" placeholder="">
                                     @error('id')
@@ -80,69 +78,39 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Nama Siswa</strong></label>
-                                    <input type="text" class="form-control @error('namaSiswa') is-invalid @enderror"
-                                        name="namaSiswa" id="namaSiswa" placeholder="">
-                                    @error('namaSiswa')
+                                    <label><strong>Nama Guru BK</strong></label>
+                                    <input type="text" class="form-control @error('namaGuruBK') is-invalid @enderror"
+                                        name="namaGuruBK" id="namaGuruBK" placeholder="">
+                                    @error('namaGuruBK')
                                         <div class="alert alert-danger">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Tahun Masuk</strong></label>
-                                    <input type="number" class="form-control @error('tahunMasuk') is-invalid @enderror"
-                                        name="tahunMasuk" id="tahunMasuk" placeholder="">
-                                    @error('tahunMasuk')
+                                    <label><strong>Alamat</strong></label>
+                                    <input type="text" class="form-control @error('alamat') is-invalid @enderror"
+                                        name="alamat" id="alamat" placeholder="">
+                                    @error('alamat')
                                         <div class="alert alert-danger">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Tahun Lulus</strong></label>
-                                    <input type="number" class="form-control @error('tahunLulus') is-invalid @enderror"
-                                        name="tahunLulus" id="tahunLulus" placeholder="">
-                                    @error('tahunLulus')
+                                    <label><strong>No.WA</strong></label>
+                                    <input type="number" class="form-control @error('nomorWA') is-invalid @enderror"
+                                        name="nomorWA" id="nomorWA" placeholder="">
+                                    @error('nomorWA')
                                         <div class="alert alert-danger">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Jurusan</strong></label>
-                                    <select class="form-control"class="form-control" name="jurusan" id="jurusan">
-                                        <option>-- Pilih Jurusan --</option>
-                                        <option value="TKJ">TKJ</option>
-                                        <option value="DPIB">DPIB</option>
-                                        <option value="TITL">TITL</option>
-                                        <option value="TKRO">TKRO</option>
-                                        <option value="TPM">TPM</option>
-                                        <option value="T.ELIN">T.ELIN</option>
-                                        <option value="TSM">TSM</option>
-                                        <option value="TAV">TAV</option>
-                                        <option value="IOP">IOP</option>
-                                    </select>
-                                    @error('jurusan')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Tanggal Lahir</strong></label>
-                                    <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
-                                        name="tgl_lahir" id="tgl_lahir" placeholder="">
-                                    @error('tgl_lahir')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Upload Foto Siswa (Max: 5 MB)</strong></label>
+                                    <label><strong>Upload Foto Guru BK (Max: 5 MB)</strong></label>
                                     <br />
-                                    <input class="input-file-normal" type="file" name="fotoSiswa" id="fotoSiswa" />
+                                    <input class="input-file-normal" type="file" name="fotoGuruBK" id="fotoGuruBK" />
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -152,38 +120,37 @@
                     </div>
                 </div>
             </div>
-            <br />
             <div class="table-responsive text-center">
-                <table class="table table-bordered " id="akunSiswaTable">
+                <table class="table table-bordered " id="akunGuruTable">
                     <thead class="thead bg-primary text-white">
                         <tr>
-                            <th scope="col">No. Induk</th>
-                            <th scope="col">Nama Siswa</th>
-                            <th scope="col">Jurusan</th>
-                            <th scope="col">Angkatan</th>
+                            <th scope="col">NUPTK</th>
+                            <th scope="col">Nama Guru</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col">No WA</th>
                             <th scope="col">Username</th>
                             <th scope="col">Password</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($siswas as $key => $siswa)
+                        @forelse ($gurus as $key => $guru)
                             <tr>
-                                <th scope="row">{{ $siswa->profilSiswa->id }}</th>
-                                <td>{{ $siswa->profilSiswa->namaSiswa }}</td>
-                                <td>{{ $siswa->profilSiswa->jurusan }}</td>
-                                <td>{{ $siswa->profilSiswa->tahunMasuk }}</td>
-                                <td>{{ $siswa->username }}</td>
-                                <td>{{ $siswa->profilSiswa->ulangPassword }}</td>
+                                <th scope="row">{{ $guru->profilGuru->id }}</th>
+                                <td>{{ $guru->profilGuru->namaGuruBK }}</td>
+                                <td>{{ $guru->profilGuru->alamat }}</td>
+                                <td>{{ $guru->profilGuru->nomorWA }}</td>
+                                <td>{{ $guru->username }}</td>
+                                <td>{{ $guru->profilGuru->ulangPassword }}</td>
                                 <td class="text-center">
-                                    <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST"
+                                    <form action="/akun/akun-guru/{{ $guru->id }}/destroy" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="/akun/akun-siswa/{{ $siswa->id }}" class="btn btn-info my-1 px-3">
+                                        <a href="/akun/akun-guru/{{ $guru->id }}" class="btn btn-info my-1 px-3">
                                             <i class="fa-solid fa-info"></i>
                                         </a>
-                                        <a href="/akun/akun-siswa/{{ $siswa->id }}/edit"
+                                        <a href="/akun/akun-guru/{{ $guru->id }}/edit"
                                             class="btn btn-warning my-1 px-2">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </a>
@@ -202,12 +169,10 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
-
-    <br />
 @endsection
+
 
 @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
@@ -216,7 +181,7 @@
 @push('scripts')
     <script>
         $(function() {
-            $("#akunSiswaTable").DataTable();
+            $("#akunGuruTable").DataTable();
         });
     </script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
