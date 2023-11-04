@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,5 +53,10 @@ class User extends Authenticatable
     // One to One dengan tabel profil_siswa
     public function profilSiswa() {
         return $this->hasOne(ProfilSiswa::class, 'user_id', 'id');
+    }
+
+    // One to Many dengan tabel laporan_bimbingan
+    public function laporanBimbinganFromUser() : HasMany {
+        return $this->hasMany(LaporanBimbingan::class,'user_id','id');
     }
 }

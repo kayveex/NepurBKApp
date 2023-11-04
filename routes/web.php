@@ -3,10 +3,12 @@
 use App\Http\Controllers\AkunGuruController;
 use App\Http\Controllers\AkunSiswaController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\LaporanBimbinganController;
 use App\Http\Controllers\ProfilSiswaController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\TAController;
 use App\Http\Controllers\TahunAjarController;
+use App\Models\LaporanBimbingan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +64,14 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/akun/akun-guru/{id}/edit',[AkunGuruController::class,'edit'])->middleware('userAkses:admin')->name('akunGuru');
     Route::put('/akun/akun-guru/{id}/update',[AkunGuruController::class,'update'])->middleware('userAkses:admin')->name('akunGuru');
     Route::delete('/akun/akun-guru/{id}/destroy',[AkunGuruController::class,'destroy'])->middleware('userAkses:admin');
+    // End
+
+    // CRUD Laporan Bimbingan - Start
+    Route::get('/siswa/laporan-bimbingan',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+    Route::post('/siswa/laporan-bimbingan/store',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+
+    Route::delete('/siswa/laporan-bimbingan/{id}/destroy',[LaporanBimbinganController::class,'destroy'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+
     // End
 
     // Route Error 404 - Berfungsi jika memasukkan route ngawur

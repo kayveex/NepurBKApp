@@ -18,8 +18,12 @@ class ProfilSiswa extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function prestasiSiswas(): HasMany {
-        return $this->hasMany(PrestasiSiswa::class,'siswa_id');
-    } 
+    public function prestasiSiswa(): HasMany {
+        return $this->hasMany(PrestasiSiswa::class,'siswa_id','id');
+    }
+    
+    public function laporanBimbinganFromSiswa() : HasMany {
+        return $this->hasMany(LaporanBimbingan::class,'siswa_id','id');
+    }
 
 }

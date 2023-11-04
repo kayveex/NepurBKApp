@@ -14,13 +14,21 @@ class UserAkses
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    // public function handle(Request $request, Closure $next, $role): Response
+    // {
+    //     if (auth()->user()->role == $role ) {
+    //         return $next($request);
+    //     }
+    //     return response()->json(['Anda tidak diperbolehkan untuk mengakses fitur ini!']);
+    // }
+    public function handle(Request $request, Closure $next, $roles): Response
     {
-        if (auth()->user()->role == $role ) {
+        $allowedRoles = explode('|', $roles);
+
+        if (auth()->check() && in_array(auth()->user()->role, $allowedRoles)) {
             return $next($request);
         }
+
         return response()->json(['Anda tidak diperbolehkan untuk mengakses fitur ini!']);
-        
-        
     }
 }
