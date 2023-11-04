@@ -37,6 +37,7 @@ class LaporanBimbinganController extends Controller
 
         // Memvalidasi inputan
         $request->validate([
+            'kelas' => 'required',
             'semester' => 'required',
             'bidangLayanan' => 'required',
             'tanggalBimbingan' => 'required|date',
@@ -48,6 +49,7 @@ class LaporanBimbinganController extends Controller
 
         // Membuat laporan bimbingan baru
         $laporanBimbingan = new LaporanBimbingan([
+            'kelas' => $request->input('kelas'),
             'semester' => $request->input('semester'),
             'bidangLayanan' => $request->input('bidangLayanan'),
             'tanggalBimbingan' => $request->input('tanggalBimbingan'),

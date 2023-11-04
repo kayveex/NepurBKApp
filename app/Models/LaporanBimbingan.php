@@ -10,7 +10,7 @@ class LaporanBimbingan extends Model
     use HasFactory;
     protected $table = 'laporan_bimbingan';
     protected $primaryKey = 'id';
-    protected $fillable =['semester','bidangLayanan','tanggalBimbingan','keluhan','solusi','tahunAjar_id','user_id','siswa_id'];
+    protected $fillable =['kelas','semester','bidangLayanan','tanggalBimbingan','keluhan','solusi','tahunAjar_id','user_id','siswa_id'];
     // Mendeklarasikan Relasi
     public function tahunAjar() {
         return $this->belongsTo(TahunAjar::class, 'tahunAjar_id');

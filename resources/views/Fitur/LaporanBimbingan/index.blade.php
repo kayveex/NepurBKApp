@@ -19,7 +19,7 @@
             <!-- Modal -->
             <div class="modal fade" id="modalLaporanBimbingan" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-dialog modal-dialog-centered modal-lg ">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Input Laporan Bimbingan Baru</h5>
@@ -27,9 +27,23 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/siswa/laporan-bimbingan/store" method="POST" enctype="multipart/form-data">
+                        <form action="/siswa/laporan-bimbingan/store" method="POST">
                             @csrf
                             <div class="modal-body">
+                                <div class="form-group">
+                                    <label><strong>Kelas</strong></label>
+                                    <select class="form-control" name="kelas" id="kelas">
+                                        <option>-- Pilih Kelas --</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                    @error('kelas')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label><strong>Semester</strong></label>
                                     <select class="form-control" name="semester" id="semester">
@@ -92,9 +106,28 @@
                                 <div class="form-group">
                                     <label><strong>Tahun Ajar</strong></label>
                                     <select name="tahunAjar_id" id="tahunAjar_id" class="form-control">
-                                        <!-- Menampilkan pilihan tahun ajaran dari database atau hardcode jika perlu -->
+                                        <option>-- Pilih Tahun Ajar --</option>
+                                        <!-- Menampilkan pilihan tahun ajaran dari database  -->
                                         @foreach ($tahunAjars as $tahun)
                                             <option value="{{ $tahun->id }}">{{ $tahun->tahun_ajar_siswa }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Klien Siswa</strong></label>
+                                    <div class="input-group">
+                                        <input type="text" id="searchInput" class="form-control"
+                                            placeholder="Cari siswa...">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <select name="siswa_id" id="siswa_id" class="form-control">
+                                        <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
+                                        <!-- Menampilkan pilihan klien siswa -->
+                                        @foreach ($profilSiswa as $siswa)
+                                            <option value="{{ $siswa->id }}">{{ $siswa->namaSiswa }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -106,6 +139,85 @@
                     </div>
                 </div>
             </div>
+            <br />
+            <div class="table-responsive text-center">
+                <table class="table table-bordered " id="laporanBimbinganTable">
+                    <thead class="thead bg-primary text-white">
+                        <tr>
+                            <th scope="col">Tanggal</th>
+                            <th scope="col">Kelas</th>
+                            <th scope="col">Semester</th>
+                            <th scope="col">Tahun Ajar</th>
+                            <th scope="col">Nama Siswa</th>
+                            <th scope="col">Bidang Layanan</th>
+                            <th scope="col">Keluhan</th>
+                            <th scope="col">Solusi</th>
+                            <th scope="col">Ditangani Oleh</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($laporanBimbingan as $key => $laporan)
+                            <tr>
+                                <td>{{ $laporan->tanggalBimbingan }}</td>
+                                <td>{{ $laporan->kelas }}</td>
+                                <td>{{ $laporan->semester }}</td>
+                                <td>{{ $laporan->tahunAjar->tahun_ajar_siswa }}</td>
+                                <td><a class="text-primary text-decoration-underline font-weight-bold"
+                                        href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
+                                </td>
+                                <td>{{ $laporan->bidangLayanan }}</td>
+                                <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
+                                <td>{{ Str::limit($laporan->solusi, 10) }}</td>
+                                <td>{{ $laporan->userAuthor->username }}</td>
+                                <td class="text-center">
+                                    <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="" class="btn btn-info my-1 px-3">
+                                            <i class="fa-solid fa-info"></i>
+                                        </a>
+                                        <a href="" class="btn btn-warning my-1 px-2">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        </a>
+                                        <button type="submit" class="btn btn-danger my-1 ">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <div class="alert alert-danger" role="alert">
+                                Data Kosong ! 😢
+                            </div>
+                        @endforelse
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            var input, filter, select, option, a, i;
+            input = this;
+            filter = input.value.toUpperCase();
+            select = document.getElementById('siswa_id');
+            option = select.getElementsByTagName('option');
+
+            for (i = 0; i < option.length; i++) {
+                a = option[i].textContent || option[i].innerText;
+                if (a.toUpperCase().indexOf(filter) > -1) {
+                    option[i].style.display = "";
+                } else {
+                    option[i].style.display = "none";
+                }
+            }
+        });
+    </script>
+@endpush

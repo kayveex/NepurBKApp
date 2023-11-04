@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('laporan_bimbingan', function (Blueprint $table) {
             $table->id();
+            $table->enum('kelas', ['10', '11','12']);
             $table->enum('semester', ['ganjil', 'genap']);
             $table->enum('bidangLayanan', ['pribadi', 'sosial', 'belajar', 'karir']);
             $table->date('tanggalBimbingan');

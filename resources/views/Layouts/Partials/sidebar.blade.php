@@ -21,7 +21,8 @@
     </li>
     {{-- Feature Restriction Using Ifs --}}
     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru' || Auth::user()->role == 'kepalaSekolah')
-        <li class="nav-item">
+        <li
+            class="nav-item {{ Route::is('listSiswa') || Route::is('laporanBimbingan') || Route::is('prestasiSiswa') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fa-solid fa-chalkboard-user"></i>
@@ -29,9 +30,11 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/siswa/laporan-bimbingan">Laporan BK</a>
-                    <a class="collapse-item" href="">List Siswa</a>
-                    <a class="collapse-item" href="">Prestasi Siswa</a>
+                    <a class="collapse-item {{ Route::is('laporanBimbingan') ? 'active' : '' }}"
+                        href="/siswa/laporan-bimbingan">Laporan BK</a>
+                    <a class="collapse-item {{ Route::is('listSiswa') ? 'active' : '' }}" href="">List Siswa</a>
+                    <a class="collapse-item {{ Route::is('prestasiSiswa') ? 'active' : '' }}" href="">Prestasi
+                        Siswa</a>
                 </div>
             </div>
         </li>

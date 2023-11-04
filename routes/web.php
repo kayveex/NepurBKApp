@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function() {
 
     // CRUD Laporan Bimbingan - Start
     Route::get('/siswa/laporan-bimbingan',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
-    Route::post('/siswa/laporan-bimbingan/store',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+    Route::post('/siswa/laporan-bimbingan/store',[LaporanBimbinganController::class,'store'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
 
     Route::delete('/siswa/laporan-bimbingan/{id}/destroy',[LaporanBimbinganController::class,'destroy'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
 

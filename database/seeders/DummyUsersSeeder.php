@@ -21,12 +21,6 @@ class DummyUsersSeeder extends Seeder
                 'role' => 'admin'
             ],
             [
-                'username' => 'gurutest',
-                'email' => 'gurutest@gmail.com',
-                'password' =>bcrypt('12345678'),
-                'role' => 'guru'
-            ],
-            [
                 'username' => 'kepsektest',
                 'email' => 'kepsektest@gmail.com',
                 'password' =>bcrypt('kepsektest'),
