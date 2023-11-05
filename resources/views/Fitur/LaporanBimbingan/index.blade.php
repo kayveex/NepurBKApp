@@ -5,9 +5,18 @@
 {{-- Bagian Konten --}}
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Laporan Bimbingan</h6>
-        </div>
+        @if (Auth::user()->role == 'guru')
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">List Laporan Bimbingan
+                    {{ Auth::user()->profilGuru->namaGuruBK }}</h6>
+            </div>
+        @endif
+        @if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah')
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Laporan Bimbingan Keseluruhan</h6>
+            </div>
+        @endif
+
         <div class="card-body">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary d-flex align-items-center" data-toggle="modal"
@@ -140,66 +149,140 @@
                 </div>
             </div>
             <br />
-            <div class="table-responsive text-center">
-                <table class="table table-bordered " id="laporanBimbinganTable">
-                    <thead class="thead bg-primary text-white">
-                        <tr>
-                            <th scope="col">Tanggal</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Semester</th>
-                            <th scope="col">Tahun Ajar</th>
-                            <th scope="col">Nama Siswa</th>
-                            <th scope="col">Bidang Layanan</th>
-                            <th scope="col">Keluhan</th>
-                            <th scope="col">Solusi</th>
-                            <th scope="col">Ditangani Oleh</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($laporanBimbingan as $key => $laporan)
+            @if (Auth::user()->role == 'admin')
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered " id="laporanBimbinganTable">
+                        <thead class="thead bg-primary text-white">
                             <tr>
-                                <td>{{ $laporan->tanggalBimbingan }}</td>
-                                <td>{{ $laporan->kelas }}</td>
-                                <td>{{ $laporan->semester }}</td>
-                                <td>{{ $laporan->tahunAjar->tahun_ajar_siswa }}</td>
-                                <td><a class="text-primary text-decoration-underline font-weight-bold"
-                                        href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
-                                </td>
-                                <td>{{ $laporan->bidangLayanan }}</td>
-                                <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
-                                <td>{{ Str::limit($laporan->solusi, 10) }}</td>
-                                <td>{{ $laporan->userAuthor->username }}</td>
-                                <td class="text-center">
-                                    <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('DELETE')
-                                        <a href="" class="btn btn-info my-1 px-3">
-                                            <i class="fa-solid fa-info"></i>
-                                        </a>
-                                        <a href="" class="btn btn-warning my-1 px-2">
-                                            <i class="fa-solid fa-user-pen"></i>
-                                        </a>
-                                        <button type="submit" class="btn btn-danger my-1 ">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col">Tahun Ajar</th>
+                                <th scope="col">Nama Siswa</th>
+                                <th scope="col">Bidang Layanan</th>
+                                <th scope="col">Keluhan</th>
+                                <th scope="col">Solusi</th>
+                                <th scope="col">Ditangani Oleh</th>
+                                <th scope="col">Aksi</th>
                             </tr>
-                        @empty
-                            <div class="alert alert-danger" role="alert">
-                                Data Kosong ! 😢
-                            </div>
-                        @endforelse
+                        </thead>
+                        <tbody>
+                            @forelse ($laporanBimbingan as $key => $laporan)
+                                <tr>
+                                    <td>{{ $laporan->tanggalBimbingan }}</td>
+                                    <td>{{ $laporan->kelas }}</td>
+                                    <td>{{ $laporan->semester }}</td>
+                                    <td>{{ $laporan->tahunAjar->tahun_ajar_siswa }}</td>
+                                    <td><a class="text-primary text-decoration-underline font-weight-bold"
+                                            href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
+                                    </td>
+                                    <td>{{ $laporan->bidangLayanan }}</td>
+                                    <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
+                                    <td>{{ Str::limit($laporan->solusi, 10) }}</td>
+                                    <td>
+                                        @if ($laporan->userAuthor->role == 'admin')
+                                            {{ $laporan->userAuthor->username }}
+                                        @endif
+                                        @if ($laporan->userAuthor->role == 'guru')
+                                            <a class="text-primary text-decoration-underline font-weight-bold"
+                                                href="/akun/akun-guru/{{ $laporan->userAuthor->id }}">{{ $laporan->userAuthor->username }}</a>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy"
+                                            method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="" class="btn btn-info my-1 px-3">
+                                                <i class="fa-solid fa-info"></i>
+                                            </a>
+                                            <a href="" class="btn btn-warning my-1 px-2">
+                                                <i class="fa-solid fa-user-pen"></i>
+                                            </a>
+                                            <button type="submit" class="btn btn-danger my-1 ">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <div class="alert alert-danger" role="alert">
+                                    Data Kosong ! 😢
+                                </div>
+                            @endforelse
 
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+            @if (Auth::user()->role == 'guru')
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered " id="laporanBimbinganTable">
+                        <thead class="thead bg-primary text-white">
+                            <tr>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col">Tahun Ajar</th>
+                                <th scope="col">Nama Siswa</th>
+                                <th scope="col">Bidang Layanan</th>
+                                <th scope="col">Keluhan</th>
+                                <th scope="col">Solusi</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($laporanBimbingan as $key => $laporan)
+                                @if ($laporan->userAuthor->id === Auth::id())
+                                    <tr>
+                                        <td>{{ $laporan->tanggalBimbingan }}</td>
+                                        <td>{{ $laporan->kelas }}</td>
+                                        <td>{{ $laporan->semester }}</td>
+                                        <td>{{ $laporan->tahunAjar->tahun_ajar_siswa }}</td>
+                                        <td><a class="text-primary text-decoration-underline font-weight-bold"
+                                                href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
+                                        </td>
+                                        <td>{{ $laporan->bidangLayanan }}</td>
+                                        <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
+                                        <td>{{ Str::limit($laporan->solusi, 10) }}</td>
+                                        <td class="text-center">
+                                            <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="" class="btn btn-info my-1 px-3">
+                                                    <i class="fa-solid fa-info"></i>
+                                                </a>
+                                                <a href="" class="btn btn-warning my-1 px-2">
+                                                    <i class="fa-solid fa-user-pen"></i>
+                                                </a>
+                                                <button type="submit" class="btn btn-danger my-1 ">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @empty
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="alert alert-danger" role="alert">
+                                            Data Kosong ! 😢
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
-
     </div>
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@endpush
 
 @push('scripts')
     <script>
@@ -220,4 +303,10 @@
             }
         });
     </script>
+    <script>
+        $(function() {
+            $("#laporanBimbinganTable").DataTable();
+        });
+    </script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 @endpush
