@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function() {
     // CRUD Akun Siswa - Start
     Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin') ->name('akunSiswa');
     Route::post('/akun/akun-siswa/store', [AkunSiswaController::class,'store'])->middleware('userAkses:admin');
-    Route::get('/akun/akun-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:admin')->name('akunSiswa');
+    Route::get('/akun/akun-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:admin|guru')->name('akunSiswa');
     Route::get('/akun/akun-siswa/{id}/edit',[AkunSiswaController::class,'edit'])->middleware('userAkses:admin')->name('akunSiswa');
     Route::put('/akun/akun-siswa/{id}/update',[AkunSiswaController::class,'update'])->middleware('userAkses:admin')->name('akunSiswa');
     Route::delete('/akun/akun-siswa/{id}/destroy',[AkunSiswaController::class,'destroy'])->middleware('userAkses:admin');
@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function() {
     // CRUD Akun Guru BK - Start
     Route::get('/akun/akun-guru', [AkunGuruController::class,'index'])->middleware('userAkses:admin')->name('akunGuru');
     Route::post('/akun/akun-guru/store', [AkunGuruController::class,'store'])->middleware('userAkses:admin');
-    Route::get('/akun/akun-guru/{id}',[AkunGuruController::class,'show'])->middleware('userAkses:admin')->name('akunGuru');
+    Route::get('/akun/akun-guru/{id}',[AkunGuruController::class,'show'])->middleware('userAkses:admin|guru|siswa|kepalaSekolah')->name('akunGuru');
     Route::get('/akun/akun-guru/{id}/edit',[AkunGuruController::class,'edit'])->middleware('userAkses:admin')->name('akunGuru');
     Route::put('/akun/akun-guru/{id}/update',[AkunGuruController::class,'update'])->middleware('userAkses:admin')->name('akunGuru');
     Route::delete('/akun/akun-guru/{id}/destroy',[AkunGuruController::class,'destroy'])->middleware('userAkses:admin');
@@ -69,7 +69,9 @@ Route::middleware(['auth'])->group(function() {
     // CRUD Laporan Bimbingan - Start
     Route::get('/siswa/laporan-bimbingan',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
     Route::post('/siswa/laporan-bimbingan/store',[LaporanBimbinganController::class,'store'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
-
+    Route::get('/siswa/laporan-bimbingan/{id}',[LaporanBimbinganController::class,'show'])->middleware('userAkses:admin|guru|kepalaSekolah|siswa')->name('laporanBimbingan');
+    Route::get('/siswa/laporan-bimbingan/{id}/edit',[LaporanBimbinganController::class,'edit'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+    Route::put('/siswa/laporan-bimbingan/{id}/update',[LaporanBimbinganController::class,'update'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
     Route::delete('/siswa/laporan-bimbingan/{id}/destroy',[LaporanBimbinganController::class,'destroy'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
 
     // End

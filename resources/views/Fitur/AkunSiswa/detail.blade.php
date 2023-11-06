@@ -19,10 +19,12 @@
 
 
                     <!-- Account Information -->
-                    <h4 class="font-weight-bold my-2">Informasi Akun</h4>
-                    <p>Username: {{ $siswa->username }} </p>
-                    <p>Email: {{ $siswa->email }} </p>
-                    <p>Password: {{ $siswa->profilSiswa->ulangPassword }}</p>
+                    @if (Auth::user()->role == 'admin')
+                        <h4 class="font-weight-bold my-2">Informasi Akun</h4>
+                        <p>Username: {{ $siswa->username }} </p>
+                        <p>Email: {{ $siswa->email }} </p>
+                        <p>Password: {{ $siswa->profilSiswa->ulangPassword }}</p>
+                    @endif
                 </div>
                 <div class="col-md-8">
                     <!-- Personal Information -->

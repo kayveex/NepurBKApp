@@ -74,7 +74,9 @@ class LaporanBimbinganController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $laporanBimbingan = LaporanBimbingan::find($id);
+
+        return view('Fitur.LaporanBimbingan.detail', compact('laporanBimbingan'));
     }
 
     /**
@@ -82,7 +84,11 @@ class LaporanBimbinganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $laporanBimbingan = LaporanBimbingan::find($id);
+        $tahunAjars = TahunAjar::all();
+        $profilSiswa = ProfilSiswa::all();
+    
+        return view('Fitur.LaporanBimbingan.update', compact('laporanBimbingan', 'tahunAjars', 'profilSiswa'));
     }
 
     /**
@@ -90,7 +96,36 @@ class LaporanBimbinganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Mendapatkan user yang sedang login
+        $user = Auth::user();
+
+        // Memvalidasi inputan
+        $request->validate([
+            'kelas' => 'required',
+            'semester' => 'required',
+            'bidangLayanan' => 'required',
+            'tanggalBimbingan' => 'required|date',
+            'keluhan' => 'required',
+            'solusi' => 'required',
+            'tahunAjar_id' => 'required',
+            'siswa_id' => 'required'
+        ]);
+        // Mencari laporan bimbingan berdasarkan ID
+        $laporanBimbingan = LaporanBimbingan::find($id);
+
+        // Memperbarui nilai laporan bimbingan dengan metode update
+        $laporanBimbingan->update([
+            'kelas' => $request->input('kelas'),
+            'semester' => $request->input('semester'),
+            'bidangLayanan' => $request->input('bidangLayanan'),
+            'tanggalBimbingan' => $request->input('tanggalBimbingan'),
+            'keluhan' => $request->input('keluhan'),
+            'solusi' => $request->input('solusi'),
+            'tahunAjar_id' => $request->input('tahunAjar_id'),
+            'siswa_id' => $request->input('siswa_id'),
+            'user_id' => $user->id,
+        ]);
+        return redirect('/siswa/laporan-bimbingan')->with('success', 'Laporan Bimbingan telah berhasil diupdate.');
     }
 
     /**

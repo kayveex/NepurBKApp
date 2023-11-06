@@ -17,10 +17,12 @@
 
 
                     <!-- Account Information -->
-                    <h4 class="font-weight-bold my-2">Informasi Akun</h4>
-                    <p>Username: {{ $guru->username }} </p>
-                    <p>Email: {{ $guru->email }} </p>
-                    <p>Password: {{ $guru->profilGuru->ulangPassword }}</p>
+                    @if (Auth::user()->role == 'admin')
+                        <h4 class="font-weight-bold my-2">Informasi Akun</h4>
+                        <p>Username: {{ $guru->username }} </p>
+                        <p>Email: {{ $guru->email }} </p>
+                        <p>Password: {{ $guru->profilGuru->ulangPassword }}</p>
+                    @endif
                 </div>
                 <div class="col-md-8">
                     <!-- Personal Information -->

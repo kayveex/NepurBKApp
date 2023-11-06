@@ -193,10 +193,12 @@
                                             method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="" class="btn btn-info my-1 px-3">
+                                            <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}"
+                                                class="btn btn-info my-1 px-3">
                                                 <i class="fa-solid fa-info"></i>
                                             </a>
-                                            <a href="" class="btn btn-warning my-1 px-2">
+                                            <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}/edit"
+                                                class="btn btn-warning my-1 px-2">
                                                 <i class="fa-solid fa-user-pen"></i>
                                             </a>
                                             <button type="submit" class="btn btn-danger my-1 ">
@@ -250,10 +252,12 @@
                                                 method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="" class="btn btn-info my-1 px-3">
+                                                <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}"
+                                                    class="btn btn-info my-1 px-3">
                                                     <i class="fa-solid fa-info"></i>
                                                 </a>
-                                                <a href="" class="btn btn-warning my-1 px-2">
+                                                <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}/edit"
+                                                    class="btn btn-warning my-1 px-2">
                                                     <i class="fa-solid fa-user-pen"></i>
                                                 </a>
                                                 <button type="submit" class="btn btn-danger my-1 ">
