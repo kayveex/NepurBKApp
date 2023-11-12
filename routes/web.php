@@ -3,6 +3,8 @@
 use App\Http\Controllers\AkunGuruController;
 use App\Http\Controllers\AkunSiswaController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\EditProfilGuruController;
+use App\Http\Controllers\EditProfilSiswaController;
 use App\Http\Controllers\LaporanBimbinganController;
 use App\Http\Controllers\ProfilSiswaController;
 use App\Http\Controllers\SesiController;
@@ -49,8 +51,8 @@ Route::middleware(['auth'])->group(function() {
     // End
 
     // CRUD Akun Siswa - Start
-    Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin') ->name('akunSiswa');
-    Route::post('/akun/akun-siswa/store', [AkunSiswaController::class,'store'])->middleware('userAkses:admin');
+    Route::get('/akun/akun-siswa', [AkunSiswaController::class,'index'])->middleware('userAkses:admin|guru') ->name('akunSiswa');
+    Route::post('/akun/akun-siswa/store', [AkunSiswaController::class,'store'])->middleware('userAkses:admin|guru');
     Route::get('/akun/akun-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:admin|guru')->name('akunSiswa');
     Route::get('/akun/akun-siswa/{id}/edit',[AkunSiswaController::class,'edit'])->middleware('userAkses:admin')->name('akunSiswa');
     Route::put('/akun/akun-siswa/{id}/update',[AkunSiswaController::class,'update'])->middleware('userAkses:admin')->name('akunSiswa');
@@ -74,6 +76,20 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/siswa/laporan-bimbingan/{id}/update',[LaporanBimbinganController::class,'update'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
     Route::delete('/siswa/laporan-bimbingan/{id}/destroy',[LaporanBimbinganController::class,'destroy'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
 
+    // End
+
+    // // Read - List Siswa
+    Route::get('/siswa/list-siswa',[AkunSiswaController::class,'index'])->middleware('userAkses:guru')->name('listSiswa');
+    Route::get('/siswa/list-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:guru')->name('listSiswa');
+
+    // Update ProfilSiswa
+    Route::get('/profil-siswa/{id}',[EditProfilSiswaController::class,'edit'])->middleware('userAkses:siswa')->name('profilSiswa');
+    Route::put('/profil-siswa/{id}/update',[EditProfilSiswaController::class, 'update'])->middleware('userAkses:siswa')->name('profilSiswa');
+    // End
+
+    // Update ProfilGuruBK
+    Route::get('/profil-guru/{id}',[EditProfilGuruController::class, 'edit'])->middleware('userAkses:guru')->name('profilGuru');
+    Route::put('/profil-guru/{id}/update',[EditProfilGuruController::class, 'update'])->middleware('userAkses:guru')->name('profilGuru');
     // End
 
     // Route Error 404 - Berfungsi jika memasukkan route ngawur

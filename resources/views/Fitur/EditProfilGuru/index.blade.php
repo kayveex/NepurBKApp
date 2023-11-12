@@ -1,11 +1,12 @@
 {{-- Template Utama --}}
 @extends('Layouts.master')
 
+{{-- Isi Konten --}}
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
-                Edit Profil Guru BK
+                Edit Profil Guru BK: {{ $guru->profilGuru->namaGuruBK }}
             </h6>
         </div>
         <div class="card-body">
@@ -13,11 +14,11 @@
                 <div class="col-md-4">
                     <!-- Profile Picture -->
                     <img src="{{ asset($guru->profilGuru->fotoGuruBK) }}" alt="Profile Picture"
-                        class="img-thumbnail mx-auto my-auto rounded-circle" style="width: 128px; height: 128px;">
+                        class="img-thumbnail mx-auto my-auto rounded-circle" style="width: 256px; height: 256px;">
                 </div>
                 {{-- Update Profil Section --}}
                 <div class="col-md-8">
-                    <form action="/akun/akun-guru/{{ $guru->id }}/update" method="post" enctype="multipart/form-data">
+                    <form action="/profil-guru/{{ $guru->id }}/update" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="form-group">

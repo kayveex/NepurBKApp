@@ -32,7 +32,11 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ Route::is('laporanBimbingan') ? 'active' : '' }}"
                         href="/siswa/laporan-bimbingan">Laporan BK</a>
-                    <a class="collapse-item {{ Route::is('listSiswa') ? 'active' : '' }}" href="">List Siswa</a>
+                    @if (Auth::user()->role == 'guru' || Auth::user()->role == 'kepalaSekolah')
+                        <a class="collapse-item {{ Route::is('listSiswa') ? 'active' : '' }}"
+                            href="/siswa/list-siswa">List
+                            Siswa</a>
+                    @endif
                     <a class="collapse-item {{ Route::is('prestasiSiswa') ? 'active' : '' }}" href="">Prestasi
                         Siswa</a>
                 </div>

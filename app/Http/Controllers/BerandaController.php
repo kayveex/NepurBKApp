@@ -17,8 +17,10 @@ class BerandaController extends Controller
         }else if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah') {
             $totalLaporan = LaporanBimbingan::count('*');
             return view('beranda',compact('totalLaporan'));
-        }else {
-            return view('beranda');
+        }else if(Auth::user()->role == 'siswa') {
+            $id = Auth::user()->profilSiswa->id;
+            $riwayatSiswa = LaporanBimbingan::where('siswa_id',$id)->count();
+            return view('beranda', compact('riwayatSiswa'));
         }   
     }
 }

@@ -24,11 +24,20 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 @if (Auth::user()->role == 'guru' || Auth::user()->role == 'siswa')
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profil Akun
-                    </a>
-                    <div class="dropdown-divider"></div>
+                    @if (Auth::user()->role == 'siswa')
+                        <a class="dropdown-item" href="/profil-siswa/{{ Auth::user()->id }}">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Profil Saya
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    @endif
+                    @if (Auth::user()->role == 'guru')
+                        <a class="dropdown-item" href="/profil-guru/{{ Auth::user()->id }}">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Profil Saya
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    @endif
                 @endif
 
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
