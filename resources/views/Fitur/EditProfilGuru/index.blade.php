@@ -64,7 +64,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label><strong>NUPTK</strong></label>
+                            <label><strong>NIP</strong></label>
                             <input type="number" class="form-control @error('id') is-invalid @enderror" name="id"
                                 id="id" placeholder="" value="{{ $guru->profilGuru->id }}">
                             @error('id')

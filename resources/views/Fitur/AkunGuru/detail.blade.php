@@ -27,7 +27,7 @@
                 <div class="col-md-8">
                     <!-- Personal Information -->
                     <h2>{{ $guru->profilGuru->namaGuruBK }}</h2>
-                    <p>NUPTK: {{ $guru->profilGuru->id }}</p>
+                    <p>NIP: {{ $guru->profilGuru->id }}</p>
                     <p>Alamat: {{ $guru->profilGuru->alamat }}</p>
                     <p>No. WA: {{ $guru->profilGuru->nomorWA }}</p>
                 </div>

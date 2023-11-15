@@ -29,7 +29,7 @@
             <p><span class="font-weight-bold">Semester</span> : {{ $laporanBimbingan->semester }} </p>
             <p><span class="font-weight-bold">Tahun Ajar</span> : {{ $laporanBimbingan->tahunAjar->tahun_ajar_siswa }} </p>
             <br>
-            <h3 class="font-weight-bold">Keluhan</h3>
+            <h3 class="font-weight-bold">Deskripsi Masalah</h3>
             <div class="border border-primary p-2">
                 <p>{{ $laporanBimbingan->keluhan }}</p>
             </div>

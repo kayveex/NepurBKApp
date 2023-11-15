@@ -68,7 +68,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>NUPTK</strong></label>
+                                    <label><strong>NIP</strong></label>
                                     <input type="number" class="form-control @error('id') is-invalid @enderror"
                                         name="id" id="id" placeholder="">
                                     @error('id')
@@ -124,7 +124,7 @@
                 <table class="table table-bordered " id="akunGuruTable">
                     <thead class="thead bg-primary text-white">
                         <tr>
-                            <th scope="col">NUPTK</th>
+                            <th scope="col">NIP</th>
                             <th scope="col">Nama Guru</th>
                             <th scope="col">Alamat</th>
                             <th scope="col">No WA</th>

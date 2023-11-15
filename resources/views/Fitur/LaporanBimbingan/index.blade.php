@@ -93,7 +93,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label><strong>Keluhan</strong></label>
+                                    <label><strong>Deskripsi Masalah</strong></label>
                                     <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100"
                                         rows="3"></textarea>
                                     @error('keluhan')
@@ -160,7 +160,7 @@
                                 <th scope="col">Tahun Ajar</th>
                                 <th scope="col">Nama Siswa</th>
                                 <th scope="col">Bidang Layanan</th>
-                                <th scope="col">Keluhan</th>
+                                <th scope="col">Deskripsi Masalah</th>
                                 <th scope="col">Solusi</th>
                                 <th scope="col">Ditangani Oleh</th>
                                 <th scope="col">Aksi</th>
@@ -228,7 +228,7 @@
                                 <th scope="col">Tahun Ajar</th>
                                 <th scope="col">Nama Siswa</th>
                                 <th scope="col">Bidang Layanan</th>
-                                <th scope="col">Keluhan</th>
+                                <th scope="col">Deskripsi Masalah</th>
                                 <th scope="col">Solusi</th>
                                 <th scope="col">Aksi</th>
                             </tr>

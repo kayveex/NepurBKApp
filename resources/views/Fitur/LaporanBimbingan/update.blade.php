@@ -70,7 +70,7 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label><strong>Keluhan</strong></label>
+                    <label><strong>Deskripsi Masalah</strong></label>
                     <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100"
                         rows="3">{{ $laporanBimbingan->keluhan }}</textarea>
                     @error('keluhan')
