@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\PrestasiSiswa;
 use App\Models\User;
 use App\Models\ProfilSiswa;
 
@@ -83,7 +85,9 @@ class AkunSiswaController extends Controller
         ->with('profilSiswa')
         ->first();
 
-        return view('Fitur.AkunSiswa.detail', compact('siswa'));
+        $prestasi = PrestasiSiswa::all();
+
+        return view('Fitur.AkunSiswa.detail', compact('siswa', 'prestasi'));
     }
 
     /**

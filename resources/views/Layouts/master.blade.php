@@ -75,7 +75,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; SMKN1 Purwakarta & Universitas Pendidikan Indonesia | </span>
+                        <span>Copyright &copy; SMKN1 Purwakarta & Pendidikan Sistem & Teknologi Informasi UPI | </span>
                         <script>
                             document.write(new Date().getFullYear());
                         </script>

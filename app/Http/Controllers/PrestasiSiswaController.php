@@ -19,15 +19,13 @@ class PrestasiSiswaController extends Controller
         // Mengambil semua data ProfilSiswa dari database
         $profilSiswaList = ProfilSiswa::all();
         //Menampilkan dalam index
-        return view('Fitur.PrestasiSiswa.index',compact('prestasiSiswaList'));
+        return view('Fitur.PrestasiSiswa.index',compact('prestasiSiswaList','profilSiswaList'));
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $userSiswa = Auth::user()->profilSiswa->id;
-
         if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru') {
             //Validasi Data - Admin, guru
             $request->validate([
@@ -52,7 +50,10 @@ class PrestasiSiswaController extends Controller
             
             $buatPrestasiSiswa->save();
 
+            return redirect('/siswa/prestasi-siswa')->with('success', 'Berhasil membuat laporan prestasi siswa');
+
         }else if (Auth::user()->role == 'siswa') {
+            $userSiswa = Auth::user()->profilSiswa->id;
             //Validasi Data - siswa
             $request->validate([
                 'tahunPencapaian' => 'required',
@@ -74,6 +75,8 @@ class PrestasiSiswaController extends Controller
             ]);
 
             $buatPrestasiSiswa->save();
+
+            return redirect('/siswa/prestasi-siswa')->with('success', 'Berhasil membuat laporan prestasi siswa');
         }
 
     }
@@ -83,7 +86,10 @@ class PrestasiSiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $prestasi = PrestasiSiswa::find($id);
+
+        return view('Fitur.PrestasiSiswa.detail',compact('prestasi'));
+
     }
 
     /**
@@ -91,7 +97,13 @@ class PrestasiSiswaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Mengambil semua data PrestasiSiswa dari database berdasarkan id
+        $prestasi = PrestasiSiswa::find($id);
+        // Mengambil semua data ProfilSiswa dari database
+        $profilSiswaList = ProfilSiswa::all();
+        
+        return view('Fitur.PrestasiSiswa.update', compact('prestasi','profilSiswaList'));
+
     }
 
     /**
@@ -99,7 +111,62 @@ class PrestasiSiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru') {
+            // Validasi Data - Admin, guru
+            $request->validate([
+                'tahunPencapaian' => 'required',
+                'bidangPrestasi' => 'required',
+                'deskripsi' => 'required',
+                'tingkatPrestasi' => 'required',
+                'posisiJuara' => 'required',
+                'buktiPrestasi' => 'required',
+                'siswa_id' => 'required'
+            ]);
+    
+            // Temukan data prestasi yang akan diupdate berdasarkan ID
+            $prestasi = PrestasiSiswa::findOrFail($id);
+    
+            // Update data prestasi
+            $prestasi->update([
+                'tahunPencapaian' => $request->input('tahunPencapaian'),
+                'bidangPrestasi' => $request->input('bidangPrestasi'),
+                'deskripsi' => $request->input('deskripsi'),
+                'tingkatPrestasi' => $request->input('tingkatPrestasi'),
+                'posisiJuara' => $request->input('posisiJuara'),
+                'buktiPrestasi' => $request->input('buktiPrestasi'),
+                'siswa_id' => $request->input('siswa_id')
+            ]);
+    
+            return redirect('/siswa/prestasi-siswa')->with('success', 'Berhasil mengupdate laporan prestasi siswa');
+    
+        } else if (Auth::user()->role == 'siswa') {
+            $userSiswa = Auth::user()->profilSiswa->id;
+            // Validasi Data - siswa
+            $request->validate([
+                'tahunPencapaian' => 'required',
+                'bidangPrestasi' => 'required',
+                'deskripsi' => 'required',
+                'tingkatPrestasi' => 'required',
+                'posisiJuara' => 'required',
+                'buktiPrestasi' => 'required',
+            ]);
+    
+            // Temukan data prestasi yang akan diupdate berdasarkan ID
+            $prestasi = PrestasiSiswa::findOrFail($id);
+    
+            // Update data prestasi
+            $prestasi->update([
+                'tahunPencapaian' => $request->input('tahunPencapaian'),
+                'bidangPrestasi' => $request->input('bidangPrestasi'),
+                'deskripsi' => $request->input('deskripsi'),
+                'tingkatPrestasi' => $request->input('tingkatPrestasi'),
+                'posisiJuara' => $request->input('posisiJuara'),
+                'buktiPrestasi' => $request->input('buktiPrestasi'),
+                'siswa_id' => $userSiswa
+            ]);
+    
+            return redirect('/siswa/prestasi-siswa')->with('success', 'Berhasil mengupdate laporan prestasi siswa');
+        }
     }
 
     /**
@@ -107,6 +174,9 @@ class PrestasiSiswaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $laporanPrestasiSiswa = PrestasiSiswa::find($id);
+        $laporanPrestasiSiswa->delete();
+        // Kembali ke tampilan tabel Prestasi Siswa
+        return redirect('/siswa/prestasi-siswa')->with('success', 'Prestasi Siswa telah berhasil dihapus.');
     }
 }

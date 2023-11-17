@@ -38,7 +38,17 @@
                     <!-- Awards / Lomba -->
                     <h4>Prestasi Siswa</h4>
                     <ul>
-                        <li>Fitur Sedang Dikembangkan! 🙏</li>
+                        @forelse ($prestasi as $item)
+                            @if ($item->siswa_id == $siswa->profilSiswa->id)
+                                <li><a href="/siswa/prestasi-siswa/{{ $item->id }}">{{ Str::limit($item->deskripsi, 20) }}
+                                        || Detail</a></li>
+                            @endif
+                            @if ($item->siswa_id != $siswa->profilSiswa->id)
+                                <li>Data Tidak Ditemukan! 😥</li>
+                            @endif
+                        @empty
+                            <li>Data Tidak Ditemukan! 😥</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>

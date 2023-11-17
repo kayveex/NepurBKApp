@@ -7,7 +7,7 @@
     <div class="card shadow mb-4">
         @if (Auth::user()->role == 'guru')
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">List Laporan Bimbingan
+                <h6 class="m-0 font-weight-bold text-primary">Laporan Bimbingan:
                     {{ Auth::user()->profilGuru->namaGuruBK }}</h6>
             </div>
         @endif

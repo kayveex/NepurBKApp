@@ -37,7 +37,8 @@
                             href="/siswa/list-siswa">List
                             Siswa</a>
                     @endif
-                    <a class="collapse-item {{ Route::is('prestasiSiswa') ? 'active' : '' }}" href="">Prestasi
+                    <a class="collapse-item {{ Route::is('prestasiSiswa') ? 'active' : '' }}"
+                        href="/siswa/prestasi-siswa">Prestasi
                         Siswa</a>
                 </div>
             </div>

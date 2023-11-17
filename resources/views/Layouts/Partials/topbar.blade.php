@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <h1 class="h5 text-gray-800">Dashboard {{ Auth::user()->role }} </h1>
+    <h1 class="h5 text-gray-800">Dashboard {{ Auth::user()->role }} ||  {{ Auth::user()->username }} </h1>
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
