@@ -43,11 +43,18 @@
                                 <li><a href="/siswa/prestasi-siswa/{{ $item->id }}">{{ Str::limit($item->deskripsi, 20) }}
                                         || Detail</a></li>
                             @endif
-                            @if ($item->siswa_id != $siswa->profilSiswa->id)
-                                <li>Data Tidak Ditemukan! 😥</li>
+                        @empty
+                        @endforelse
+                    </ul>
+                    <br>
+                    <h4>Riwayat Konsul</h4>
+                    <ul>
+                        @forelse ($laporanBimbingan as $item)
+                            @if ($item->siswa_id == $siswa->profilSiswa->id)
+                                <li><a href="/siswa/laporan-bimbingan/{{ $item->id }}">{{ Str::limit($item->keluhan, 20) }}
+                                        || Detail</a></li>
                             @endif
                         @empty
-                            <li>Data Tidak Ditemukan! 😥</li>
                         @endforelse
                     </ul>
                 </div>

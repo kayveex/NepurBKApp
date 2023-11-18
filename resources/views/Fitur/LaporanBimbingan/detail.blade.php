@@ -22,9 +22,11 @@
             </p>
             <br>
             <h3 class="font-weight-bold">Informasi Pasien</h3>
-            <p><span class="font-weight-bold">Nama Pasien</span> : <a class="text-info"
-                    href="/akun/akun-siswa/{{ $laporanBimbingan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporanBimbingan->fromProfilSiswa->namaSiswa }}</a>
-            </p>
+            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru' || Auth::user()->role == 'kepalaSekolah')
+                <p><span class="font-weight-bold">Nama Pasien</span> : <a class="text-info"
+                        href="/akun/akun-siswa/{{ $laporanBimbingan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporanBimbingan->fromProfilSiswa->namaSiswa }}</a>
+                </p>
+            @endif
             <p><span class="font-weight-bold">Kelas</span> : {{ $laporanBimbingan->kelas }} </p>
             <p><span class="font-weight-bold">Semester</span> : {{ $laporanBimbingan->semester }} </p>
             <p><span class="font-weight-bold">Tahun Ajar</span> : {{ $laporanBimbingan->tahunAjar->tahun_ajar_siswa }} </p>

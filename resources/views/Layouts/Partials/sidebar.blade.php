@@ -70,10 +70,16 @@
     @endif
 
     @if (Auth::user()->role == 'siswa')
-        <li class="nav-item">
-            <a class="nav-link" href="">
+        <li class="nav-item {{ Route::is('laporanBimbingan') ? 'active' : '' }}">
+            <a class="nav-link " href="/siswa/laporan-bimbingan">
                 <i class="fa-solid fa-folder-open"></i>
-                <span>Riwayatku</span></a>
+                <span>Riwayatku</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Route::is('prestasiSiswa') ? 'active' : '' }}">
+            <a class="nav-link" href="/siswa/prestasi-siswa">
+                <i class="fa-solid fa-trophy"></i>
+                <span>Prestasiku</span></a>
         </li>
     @endif
 

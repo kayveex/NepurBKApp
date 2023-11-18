@@ -90,26 +90,31 @@
                     @enderror
                 </div>
 
-                {{-- Mencari Siswa --}}
-                <div class="form-group">
-                    <label><strong>Siswa yang Berprestasi</strong></label>
-                    <div class="input-group">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari siswa...">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru')
+                    <div class="form-group">
+                        <label><strong>Siswa yang Berprestasi</strong></label>
+                        <div class="input-group">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari siswa...">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
                         </div>
+                        <hr>
+                        <select name="siswa_id" id="siswa_id" class="form-control">
+                            <option value="">-- Buka Untuk Mendapatkan Hasil Search --</option>
+                            <!-- Menampilkan pilihan klien siswa -->
+                            @foreach ($profilSiswaList as $siswa)
+                                <option value="{{ $siswa->id }}"
+                                    {{ $siswa->id == $prestasi->siswa_id ? 'selected' : '' }}>
+                                    {{ $siswa->namaSiswa }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <hr>
-                    <select name="siswa_id" id="siswa_id" class="form-control">
-                        <option value="">-- Buka Untuk Mendapatkan Hasil Search --</option>
-                        <!-- Menampilkan pilihan klien siswa -->
-                        @foreach ($profilSiswaList as $siswa)
-                            <option value="{{ $siswa->id }}" {{ $siswa->id == $prestasi->siswa_id ? 'selected' : '' }}>
-                                {{ $siswa->namaSiswa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                @endif
+
+                {{-- Mencari Siswa --}}
+
                 <button type="submit" class="btn btn-primary mb-2 float-right">Update</button>
             </form>
         </div>

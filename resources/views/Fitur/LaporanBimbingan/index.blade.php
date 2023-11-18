@@ -17,139 +17,144 @@
             </div>
         @endif
 
-        <div class="card-body">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary d-flex align-items-center" data-toggle="modal"
-                data-target="#modalLaporanBimbingan">
-                <i class="fa-solid fa-circle-plus"></i>
-                <p class="mb-0 ml-2">Tambahkan</p>
-            </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="modalLaporanBimbingan" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg ">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Input Laporan Bimbingan Baru</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="/siswa/laporan-bimbingan/store" method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label><strong>Kelas</strong></label>
-                                    <select class="form-control" name="kelas" id="kelas">
-                                        <option>-- Pilih Kelas --</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                    @error('kelas')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Semester</strong></label>
-                                    <select class="form-control" name="semester" id="semester">
-                                        <option>-- Pilih Semester --</option>
-                                        <option value="ganjil">Ganjil</option>
-                                        <option value="genap">Genap</option>
-                                    </select>
-                                    @error('semester')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Bidang Layanan</strong></label>
-                                    <select class="form-control" name="bidangLayanan" id="bidangLayanan">
-                                        <option>-- Pilih Bidang Layanan --</option>
-                                        <option value="pribadi">Pribadi</option>
-                                        <option value="sosial">Sosial</option>
-                                        <option value="belajar">Belajar</option>
-                                        <option value="karir">Karir</option>
-                                    </select>
-                                    @error('bidangLayanan')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Tanggal Bimbingan</strong></label>
-                                    <input type="date"
-                                        class="form-control @error('tanggalBimbingan') is-invalid @enderror"
-                                        name="tanggalBimbingan" id="tanggalBimbingan" placeholder="">
-                                    @error('tanggalBimbingan')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Deskripsi Masalah</strong></label>
-                                    <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100"
-                                        rows="3"></textarea>
-                                    @error('keluhan')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Solusi</strong></label>
-                                    <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" cols="100"
-                                        rows="3"></textarea>
-                                    @error('solusi')
-                                        <div class="alert alert-danger">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Tahun Ajar</strong></label>
-                                    <select name="tahunAjar_id" id="tahunAjar_id" class="form-control">
-                                        <option>-- Pilih Tahun Ajar --</option>
-                                        <!-- Menampilkan pilihan tahun ajaran dari database  -->
-                                        @foreach ($tahunAjars as $tahun)
-                                            <option value="{{ $tahun->id }}">{{ $tahun->tahun_ajar_siswa }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label><strong>Klien Siswa</strong></label>
-                                    <div class="input-group">
-                                        <input type="text" id="searchInput" class="form-control"
-                                            placeholder="Cari siswa...">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <select name="siswa_id" id="siswa_id" class="form-control">
-                                        <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
-                                        <!-- Menampilkan pilihan klien siswa -->
-                                        @foreach ($profilSiswa as $siswa)
-                                            <option value="{{ $siswa->id }}">{{ $siswa->namaSiswa }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
+
+        <div class="card-body">
+            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru')
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary d-flex align-items-center" data-toggle="modal"
+                    data-target="#modalLaporanBimbingan">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <p class="mb-0 ml-2">Tambahkan</p>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalLaporanBimbingan" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Input Laporan Bimbingan Baru</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </form>
+                            <form action="/siswa/laporan-bimbingan/store" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label><strong>Kelas</strong></label>
+                                        <select class="form-control" name="kelas" id="kelas">
+                                            <option>-- Pilih Kelas --</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                        @error('kelas')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Semester</strong></label>
+                                        <select class="form-control" name="semester" id="semester">
+                                            <option>-- Pilih Semester --</option>
+                                            <option value="ganjil">Ganjil</option>
+                                            <option value="genap">Genap</option>
+                                        </select>
+                                        @error('semester')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Bidang Layanan</strong></label>
+                                        <select class="form-control" name="bidangLayanan" id="bidangLayanan">
+                                            <option>-- Pilih Bidang Layanan --</option>
+                                            <option value="pribadi">Pribadi</option>
+                                            <option value="sosial">Sosial</option>
+                                            <option value="belajar">Belajar</option>
+                                            <option value="karir">Karir</option>
+                                        </select>
+                                        @error('bidangLayanan')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Tanggal Bimbingan</strong></label>
+                                        <input type="date"
+                                            class="form-control @error('tanggalBimbingan') is-invalid @enderror"
+                                            name="tanggalBimbingan" id="tanggalBimbingan" placeholder="">
+                                        @error('tanggalBimbingan')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Deskripsi Masalah</strong></label>
+                                        <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100"
+                                            rows="3"></textarea>
+                                        @error('keluhan')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Solusi</strong></label>
+                                        <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" cols="100"
+                                            rows="3"></textarea>
+                                        @error('solusi')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Tahun Ajar</strong></label>
+                                        <select name="tahunAjar_id" id="tahunAjar_id" class="form-control">
+                                            <option>-- Pilih Tahun Ajar --</option>
+                                            <!-- Menampilkan pilihan tahun ajaran dari database  -->
+                                            @foreach ($tahunAjars as $tahun)
+                                                <option value="{{ $tahun->id }}">{{ $tahun->tahun_ajar_siswa }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><strong>Klien Siswa</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" id="searchInput" class="form-control"
+                                                placeholder="Cari siswa...">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <select name="siswa_id" id="siswa_id" class="form-control">
+                                            <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
+                                            <!-- Menampilkan pilihan klien siswa -->
+                                            @foreach ($profilSiswa as $siswa)
+                                                <option value="{{ $siswa->id }}">{{ $siswa->namaSiswa }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
             <br />
-            @if (Auth::user()->role == 'admin')
+            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah')
                 <div class="table-responsive text-center">
                     <table class="table table-bordered " id="laporanBimbinganTable">
                         <thead class="thead bg-primary text-white">
@@ -177,8 +182,8 @@
                                             href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
                                     </td>
                                     <td>{{ $laporan->bidangLayanan }}</td>
-                                    <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
-                                    <td>{{ Str::limit($laporan->solusi, 10) }}</td>
+                                    <td>{{ $laporan->keluhan }}</td>
+                                    <td>{{ $laporan->solusi }}</td>
                                     <td>
                                         @if ($laporan->userAuthor->role == 'admin')
                                             {{ $laporan->userAuthor->username }}
@@ -189,22 +194,30 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy"
-                                            method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('DELETE')
+                                        @if (Auth::user()->role == 'admin')
+                                            <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy"
+                                                method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}"
+                                                    class="btn btn-info my-1 px-3">
+                                                    <i class="fa-solid fa-info"></i>
+                                                </a>
+                                                <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}/edit"
+                                                    class="btn btn-warning my-1 px-2">
+                                                    <i class="fa-solid fa-user-pen"></i>
+                                                </a>
+                                                <button type="submit" class="btn btn-danger my-1 ">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @if (Auth::user()->role == 'kepalaSekolah')
                                             <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}"
                                                 class="btn btn-info my-1 px-3">
                                                 <i class="fa-solid fa-info"></i>
                                             </a>
-                                            <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}/edit"
-                                                class="btn btn-warning my-1 px-2">
-                                                <i class="fa-solid fa-user-pen"></i>
-                                            </a>
-                                            <button type="submit" class="btn btn-danger my-1 ">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -245,8 +258,8 @@
                                                 href="/akun/akun-siswa/{{ $laporan->fromProfilSiswa->userFromSiswa->id }}">{{ $laporan->fromProfilSiswa->namaSiswa }}</a>
                                         </td>
                                         <td>{{ $laporan->bidangLayanan }}</td>
-                                        <td>{{ Str::limit($laporan->keluhan, 10) }}</td>
-                                        <td>{{ Str::limit($laporan->solusi, 10) }}</td>
+                                        <td>{{ $laporan->keluhan }}</td>
+                                        <td>{{ $laporan->solusi }}</td>
                                         <td class="text-center">
                                             <form action="/siswa/laporan-bimbingan/{{ $laporan->id }}/destroy"
                                                 method="POST" enctype="multipart/form-data">
@@ -264,6 +277,53 @@
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @empty
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="alert alert-danger" role="alert">
+                                            Data Kosong ! 😢
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+            @if (Auth::user()->role == 'siswa')
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered " id="laporanBimbinganTable">
+                        <thead class="thead bg-primary text-white">
+                            <tr>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col">Tahun Ajar</th>
+                                <th scope="col">Bidang Layanan</th>
+                                <th scope="col">Deskripsi Masalah</th>
+                                <th scope="col">Solusi</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($laporanBimbingan as $key => $laporan)
+                                @if ($laporan->siswa_id == Auth::user()->profilSiswa->id)
+                                    <tr>
+                                        <td>{{ $laporan->tanggalBimbingan }}</td>
+                                        <td>{{ $laporan->kelas }}</td>
+                                        <td>{{ $laporan->semester }}</td>
+                                        <td>{{ $laporan->tahunAjar->tahun_ajar_siswa }}</td>
+                                        <td>{{ $laporan->bidangLayanan }}</td>
+                                        <td>{{ $laporan->keluhan }}</td>
+                                        <td>{{ $laporan->solusi }}</td>
+                                        <td class="text-center">
+                                            <a href="/siswa/laporan-bimbingan/{{ $laporan->id }}"
+                                                class="btn btn-info my-1 px-3">
+                                                <i class="fa-solid fa-info"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endif
@@ -307,10 +367,26 @@
             }
         });
     </script>
-    <script>
+    {{-- <script>
         $(function() {
             $("#laporanBimbinganTable").DataTable();
         });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            $('#laporanBimbinganTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
     </script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/datatables.css"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/datatables.js">
+    </script>
 @endpush

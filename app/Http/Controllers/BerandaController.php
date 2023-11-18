@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanBimbingan;
+use App\Models\PrestasiSiswa;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,11 +18,13 @@ class BerandaController extends Controller
             return view ('beranda', compact('totalLaporan','laporanGuru'));
         }else if (Auth::user()->role == 'admin' || Auth::user()->role == 'kepalaSekolah') {
             $totalLaporan = LaporanBimbingan::count('*');
-            return view('beranda',compact('totalLaporan'));
+            $guruList = User::where('role', 'guru')->get();
+            return view('beranda',compact('totalLaporan', 'guruList'));
         }else if(Auth::user()->role == 'siswa') {
             $id = Auth::user()->profilSiswa->id;
             $riwayatSiswa = LaporanBimbingan::where('siswa_id',$id)->count();
-            return view('beranda', compact('riwayatSiswa'));
+            $prestasiTotal = PrestasiSiswa::where('siswa_id',$id)->count();
+            return view('beranda', compact('riwayatSiswa', 'prestasiTotal'));
         }   
     }
 }

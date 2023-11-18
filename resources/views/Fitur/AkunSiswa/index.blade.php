@@ -173,12 +173,12 @@
                         <tbody>
                             @forelse ($siswas as $key => $siswa)
                                 <tr>
-                                    <th scope="row">{{ $siswa->profilSiswa->id }}</th>
-                                    <td>{{ $siswa->profilSiswa->namaSiswa }}</td>
-                                    <td>{{ $siswa->profilSiswa->jurusan }}</td>
-                                    <td>{{ $siswa->profilSiswa->tahunMasuk }}</td>
-                                    <td>{{ $siswa->username }}</td>
-                                    <td>{{ $siswa->profilSiswa->ulangPassword }}</td>
+                                    <th class="copyable-cell" scope="row">{{ $siswa->profilSiswa->id }}</th>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->namaSiswa }}</td>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->jurusan }}</td>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->tahunMasuk }}</td>
+                                    <td class="copyable-cell">{{ $siswa->username }}</td>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->ulangPassword }}</td>
                                     <td class="text-center">
                                         <form action="/akun/akun-siswa/{{ $siswa->id }}/destroy" method="POST"
                                             enctype="multipart/form-data">
@@ -224,10 +224,10 @@
                         <tbody>
                             @forelse ($siswas as $key => $siswa)
                                 <tr>
-                                    <th scope="row">{{ $siswa->profilSiswa->id }}</th>
-                                    <td>{{ $siswa->profilSiswa->namaSiswa }}</td>
-                                    <td>{{ $siswa->profilSiswa->jurusan }}</td>
-                                    <td>{{ $siswa->profilSiswa->tahunMasuk }}</td>
+                                    <th class="copyable-cell" scope="row">{{ $siswa->profilSiswa->id }}</th>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->namaSiswa }}</td>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->jurusan }}</td>
+                                    <td class="copyable-cell">{{ $siswa->profilSiswa->tahunMasuk }}</td>
                                     <td class="text-center">
                                         <a href="/siswa/list-siswa/{{ $siswa->id }}" class="btn btn-info my-1 px-3">
                                             <i class="fa-solid fa-info"></i>
@@ -249,6 +249,7 @@
     </div>
 
     <br />
+
 @endsection
 
 @push('styles')
@@ -262,4 +263,30 @@
         });
     </script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var copyableCells = document.querySelectorAll('.copyable-cell');
+
+            copyableCells.forEach(function(cell) {
+                cell.addEventListener('dblclick', function() {
+                    // Membuat elemen input untuk menampung teks yang akan di-copy
+                    var inputElement = document.createElement('input');
+                    inputElement.value = cell.innerText;
+                    document.body.appendChild(inputElement);
+
+                    // Memilih teks dalam elemen input
+                    inputElement.select();
+                    inputElement.setSelectionRange(0, 99999); // Untuk mendukung mobile devices
+
+                    // Menyalin teks ke clipboard
+                    document.execCommand('copy');
+
+                    // Menghapus elemen input setelah selesai
+                    document.body.removeChild(inputElement);
+
+                    // Tidak menampilkan toast, kode untuk toast dihapus
+                });
+            });
+        });
+    </script>
 @endpush

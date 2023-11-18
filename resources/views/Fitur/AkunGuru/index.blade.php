@@ -136,12 +136,12 @@
                     <tbody>
                         @forelse ($gurus as $key => $guru)
                             <tr>
-                                <th scope="row">{{ $guru->profilGuru->id }}</th>
-                                <td>{{ $guru->profilGuru->namaGuruBK }}</td>
-                                <td>{{ $guru->profilGuru->alamat }}</td>
-                                <td>{{ $guru->profilGuru->nomorWA }}</td>
-                                <td>{{ $guru->username }}</td>
-                                <td>{{ $guru->profilGuru->ulangPassword }}</td>
+                                <th class="copyable-cell" scope="row">{{ $guru->profilGuru->id }}</th>
+                                <td class="copyable-cell">{{ $guru->profilGuru->namaGuruBK }}</td>
+                                <td class="copyable-cell">{{ $guru->profilGuru->alamat }}</td>
+                                <td class="copyable-cell">{{ $guru->profilGuru->nomorWA }}</td>
+                                <td class="copyable-cell">{{ $guru->username }}</td>
+                                <td class="copyable-cell">{{ $guru->profilGuru->ulangPassword }}</td>
                                 <td class="text-center">
                                     <form action="/akun/akun-guru/{{ $guru->id }}/destroy" method="POST"
                                         enctype="multipart/form-data">
@@ -185,4 +185,30 @@
         });
     </script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var copyableCells = document.querySelectorAll('.copyable-cell');
+
+            copyableCells.forEach(function(cell) {
+                cell.addEventListener('dblclick', function() {
+                    // Membuat elemen input untuk menampung teks yang akan di-copy
+                    var inputElement = document.createElement('input');
+                    inputElement.value = cell.innerText;
+                    document.body.appendChild(inputElement);
+
+                    // Memilih teks dalam elemen input
+                    inputElement.select();
+                    inputElement.setSelectionRange(0, 99999); // Untuk mendukung mobile devices
+
+                    // Menyalin teks ke clipboard
+                    document.execCommand('copy');
+
+                    // Menghapus elemen input setelah selesai
+                    document.body.removeChild(inputElement);
+
+                    // Tidak menampilkan toast, kode untuk toast dihapus
+                });
+            });
+        });
+    </script>
 @endpush

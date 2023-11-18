@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LaporanBimbingan;
 use App\Models\PrestasiSiswa;
 use App\Models\User;
 use App\Models\ProfilSiswa;
@@ -86,8 +87,9 @@ class AkunSiswaController extends Controller
         ->first();
 
         $prestasi = PrestasiSiswa::all();
+        $laporanBimbingan = LaporanBimbingan::all();
 
-        return view('Fitur.AkunSiswa.detail', compact('siswa', 'prestasi'));
+        return view('Fitur.AkunSiswa.detail', compact('siswa', 'prestasi', 'laporanBimbingan'));
     }
 
     /**

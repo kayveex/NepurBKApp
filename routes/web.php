@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function() {
     // End
 
     // CRUD Laporan Bimbingan - Start
-    Route::get('/siswa/laporan-bimbingan',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
+    Route::get('/siswa/laporan-bimbingan',[LaporanBimbinganController::class,'index'])->middleware('userAkses:admin|guru|siswa|kepalaSekolah')->name('laporanBimbingan');
     Route::post('/siswa/laporan-bimbingan/store',[LaporanBimbinganController::class,'store'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
     Route::get('/siswa/laporan-bimbingan/{id}',[LaporanBimbinganController::class,'show'])->middleware('userAkses:admin|guru|kepalaSekolah|siswa')->name('laporanBimbingan');
     Route::get('/siswa/laporan-bimbingan/{id}/edit',[LaporanBimbinganController::class,'edit'])->middleware('userAkses:admin|guru')->name('laporanBimbingan');
@@ -89,8 +89,8 @@ Route::middleware(['auth'])->group(function() {
     // END
 
     // // Read - List Siswa
-    Route::get('/siswa/list-siswa',[AkunSiswaController::class,'index'])->middleware('userAkses:guru')->name('listSiswa');
-    Route::get('/siswa/list-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:guru')->name('listSiswa');
+    Route::get('/siswa/list-siswa',[AkunSiswaController::class,'index'])->middleware('userAkses:guru|kepalaSekolah')->name('listSiswa');
+    Route::get('/siswa/list-siswa/{id}',[AkunSiswaController::class,'show'])->middleware('userAkses:guru|kepalaSekolah')->name('listSiswa');
 
     // Update ProfilSiswa
     Route::get('/profil-siswa/{id}',[EditProfilSiswaController::class,'edit'])->middleware('userAkses:siswa')->name('profilSiswa');
