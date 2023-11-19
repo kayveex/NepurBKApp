@@ -182,10 +182,13 @@
                                                 </button>
                                             </form>
                                         @endif
-                                        <a href="/siswa/prestasi-siswa/{{ $prestasi->id }}"
-                                            class="btn btn-info my-1 px-3">
-                                            <i class="fa-solid fa-info"></i>
-                                        </a>
+                                        @if (Auth::user()->role == 'siswa' || Auth::user()->role == 'kepalaSekolah')
+                                            <a href="/siswa/prestasi-siswa/{{ $prestasi->id }}"
+                                                class="btn btn-info my-1 px-3">
+                                                <i class="fa-solid fa-info"></i>
+                                            </a>
+                                        @endif
+
                                     </td>
                                 </tr>
                             @empty
@@ -402,8 +405,12 @@
         $(document).ready(function() {
             $('#prestasiSiswaTable').DataTable({
                 dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
                 buttons: [
-                    'csv', 'excel', 'pdf', 'print'
+                    'csv', 'excel', 'pdf', 'print', 'pageLength'
                 ]
             });
         });

@@ -346,6 +346,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
 @endpush
 
 @push('scripts')
@@ -373,15 +374,41 @@
         });
     </script> --}}
     <script>
+        // $(document).ready(function() {
+        //     $('#laporanBimbinganTable').DataTable({
+        //         dom: 'Bfrtip',
+        //         lengthMenu: [
+        //             [10, 25, 50, -1],
+        //             ['10 rows', '25 rows', '50 rows', 'Show all']
+        //         ],
+        //         buttons: [
+        //             'csv', 'excel', 'pdf', 'print', 'pageLength'
+        //         ]
+        //     });
+        // });
         $(document).ready(function() {
             $('#laporanBimbinganTable').DataTable({
                 dom: 'Bfrtip',
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    ['10 rows', '25 rows', '50 rows', 'Show all']
+                ],
                 buttons: [
-                    'csv', 'excel', 'pdf', 'print'
+                    'csv', 'excel', 'pdf', 'print', 'pageLength'
                 ]
             });
         });
+        // $(document).ready(function() {
+        //     $('#laporanBimbinganTable').DataTable({
+        //         dom: 'Bfrtip',
+        //         buttons: [{
+        //             extend: 'pageLength',
+        //             split: ['pdf', 'excel', 'csv'],
+        //         }]
+        //     });
+        // });
     </script>
+
 
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/datatables.css"
         rel="stylesheet">
