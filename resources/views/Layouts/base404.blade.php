@@ -9,6 +9,7 @@
     <meta name="description" content="Aplikasi Bimbingan Konseling Milik SMKN 1 Purwakarta">
     <meta name="author" content="">
     <link rel="icon" href="{{ asset('assets/nepurfav.ico') }}" type="image/x-icon">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <title>SIMBK Nepur</title>
 

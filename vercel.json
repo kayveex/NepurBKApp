@@ -1,22 +1,51 @@
 {
     "version": 2,
-    "functions" : {
+    "framework": null,
+    "functions": {
         "api/index.php": {
-            "runtime": "vercel-php@0.6.0"
+            "runtime": "vercel-php@0.7.1"
         }
     },
-    "routes" : [
+    "routes": [
         {
-            "src": "img/(.*)",
-            "dest": "public/img/"
+            "src": "/assets/(.*)",
+            "dest": "public/assets/$1"
         },
         {
-            "src": "img/(.*)",
-            "dest": "public/FotoGuru/"
+            "src": "/FotoGuru/(.*)",
+            "dest": "public/FotoGuru/$1"
         },
         {
-            "src": "img/(.*)",
-            "dest": "public/FotoSiswa/"
+            "src": "/FotoSiswa/(.*)",
+            "dest": "public/FotoSiswa/$1"
+        },
+        {
+            "src": "/template/css/(.*)",
+            "dest": "public/template/css/$1"
+        },
+        {
+            "src": "/template/vendor/fontawesome-free/css/(.*)",
+            "dest": "public/template/vendor/fontawesome-free/css/"
+        },
+        {
+            "src": "/template/vendor/jquery/(.*)",
+            "dest": "public/template/vendor/jquery/"
+        },
+        {
+            "src": "/template/vendor/bootstrap/js/(.*)",
+            "dest": "public/template/vendor/bootstrap/js/"
+        },
+        {
+            "src": "/template/vendor/jquery-easing/(.*)",
+            "dest": "public/template/vendor/jquery-easing/"
+        },
+        {
+            "src": "/template/js/(.*)",
+            "dest": "public/template/js/$1"
+        },
+        {
+            "src": "/template/(.*)",
+            "dest": "public/template/$1"
         },
         {
             "src": "/(.*)",
@@ -25,8 +54,8 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
-        "APP_URL": "http://localhost",
+        "APP_DEBUG": "false",
+        "APP_URL": "{{VERCEL_URL}}",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
