@@ -53,7 +53,7 @@
         }
     ],
     "env": {
-        "APP_ENV": "production",
+        "APP_ENV": "development",
         "APP_DEBUG": "false",
         "APP_URL": "{{VERCEL_URL}}",
         "APP_CONFIG_CACHE": "/tmp/config.php",
