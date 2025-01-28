@@ -1,7 +1,6 @@
 {{-- Template Utama --}}
 @extends('Layouts.master')
 
-
 {{-- Bagian Konten --}}
 @section('content')
     <div class="card shadow mb-4">
@@ -16,8 +15,6 @@
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Laporan Bimbingan Keseluruhan</h6>
             </div>
         @endif
-
-
 
         <div class="card-body">
             @if (Auth::user()->role == 'admin' || Auth::user()->role == 'guru')
@@ -39,12 +36,12 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="/siswa/laporan-bimbingan/store" method="POST">
+                            <form id="laporanBimbinganForm" action="/siswa/laporan-bimbingan/store" method="POST">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label><strong>Kelas</strong></label>
-                                        <select class="form-control" name="kelas" id="kelas">
+                                        <select class="form-control" name="kelas" id="kelas" required>
                                             <option>-- Pilih Kelas --</option>
                                             <option value="10">10</option>
                                             <option value="11">11</option>
@@ -58,7 +55,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Semester</strong></label>
-                                        <select class="form-control" name="semester" id="semester">
+                                        <select class="form-control" name="semester" id="semester" required>
                                             <option>-- Pilih Semester --</option>
                                             <option value="ganjil">Ganjil</option>
                                             <option value="genap">Genap</option>
@@ -71,7 +68,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Bidang Layanan</strong></label>
-                                        <select class="form-control" name="bidangLayanan" id="bidangLayanan">
+                                        <select class="form-control" name="bidangLayanan" id="bidangLayanan" required>
                                             <option>-- Pilih Bidang Layanan --</option>
                                             <option value="pribadi">Pribadi</option>
                                             <option value="sosial">Sosial</option>
@@ -86,7 +83,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Tanggal Bimbingan</strong></label>
-                                        <input type="date"
+                                        <input type="date" required
                                             class="form-control @error('tanggalBimbingan') is-invalid @enderror"
                                             name="tanggalBimbingan" id="tanggalBimbingan" placeholder="">
                                         @error('tanggalBimbingan')
@@ -97,7 +94,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Deskripsi Masalah</strong></label>
-                                        <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100"
+                                        <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" id="keluhan" cols="100" required
                                             rows="3"></textarea>
                                         @error('keluhan')
                                             <div class="alert alert-danger">
@@ -107,7 +104,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Solusi</strong></label>
-                                        <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" cols="100"
+                                        <textarea class="form-control @error('solusi') is-invalid @enderror" name="solusi" id="solusi" cols="100" required
                                             rows="3"></textarea>
                                         @error('solusi')
                                             <div class="alert alert-danger">
@@ -117,7 +114,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>Tahun Ajar</strong></label>
-                                        <select name="tahunAjar_id" id="tahunAjar_id" class="form-control">
+                                        <select name="tahunAjar_id" id="tahunAjar_id" class="form-control" required>
                                             <option>-- Pilih Tahun Ajar --</option>
                                             <!-- Menampilkan pilihan tahun ajaran dari database  -->
                                             @foreach ($tahunAjars as $tahun)
@@ -135,7 +132,7 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <select name="siswa_id" id="siswa_id" class="form-control">
+                                        <select name="siswa_id" id="siswa_id" class="form-control" required> 
                                             <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
                                             <!-- Menampilkan pilihan klien siswa -->
                                             @foreach ($profilSiswa as $siswa)
@@ -144,7 +141,7 @@
                                         </select>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button id="submitButton" type="submit" class="btn btn-primary" disabled>Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -207,7 +204,7 @@
                                                     class="btn btn-warning my-1 px-2">
                                                     <i class="fa-solid fa-user-pen"></i>
                                                 </a>
-                                                <button type="submit" class="btn btn-danger my-1 ">
+                                                <button id="delete_laporan" type="submit" class="btn btn-danger my-1 ">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
@@ -273,7 +270,7 @@
                                                     class="btn btn-warning my-1 px-2">
                                                     <i class="fa-solid fa-user-pen"></i>
                                                 </a>
-                                                <button type="submit" class="btn btn-danger my-1 ">
+                                                <button id="delete_laporan" type="submit" class="btn btn-danger my-1 ">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
@@ -368,24 +365,8 @@
             }
         });
     </script>
-    {{-- <script>
-        $(function() {
-            $("#laporanBimbinganTable").DataTable();
-        });
-    </script> --}}
+
     <script>
-        // $(document).ready(function() {
-        //     $('#laporanBimbinganTable').DataTable({
-        //         dom: 'Bfrtip',
-        //         lengthMenu: [
-        //             [10, 25, 50, -1],
-        //             ['10 rows', '25 rows', '50 rows', 'Show all']
-        //         ],
-        //         buttons: [
-        //             'csv', 'excel', 'pdf', 'print', 'pageLength'
-        //         ]
-        //     });
-        // });
         $(document).ready(function() {
             $('#laporanBimbinganTable').DataTable({
                 dom: 'Bfrtip',
@@ -398,18 +379,61 @@
                 ]
             });
         });
-        // $(document).ready(function() {
-        //     $('#laporanBimbinganTable').DataTable({
-        //         dom: 'Bfrtip',
-        //         buttons: [{
-        //             extend: 'pageLength',
-        //             split: ['pdf', 'excel', 'csv'],
-        //         }]
-        //     });
-        // });
+
     </script>
 
+    {{-- Validator Form Input Laporan Bimbingan --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('laporanBimbinganForm');
+            const submitButton = document.getElementById('submitButton');
+    
+            // Pantau perubahan pada semua input, select, dan textarea
+            form.addEventListener('input', function () {
+                // Periksa apakah semua elemen form yang diperlukan telah diisi
+                const allFieldsFilled = Array.from(form.querySelectorAll('input, select, textarea')).every(input => {
+                    // Abaikan input dengan ID #searchInput dan validasi elemen dengan atribut required
+                    if (input.id === 'searchInput') return true;
+                    return input.hasAttribute('required') ? input.value.trim() !== '' : true;
+                });
+    
+                // Aktifkan tombol submit jika semua field terisi, nonaktifkan jika tidak
+                submitButton.disabled = !allFieldsFilled;
+            });
+        });
+    </script>
+    
+    
+    {{-- Sweetalert Delete --}}
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('click', '#delete_laporan', function(e) {
+                e.preventDefault();
+                // Make a small toast to notify the user that the data has been deleted on right top
+                Swal.fire({
+                    title: 'Laporan Bimbingan Siswa Telah Dihapus',
+                    icon: 'success',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: false,
+                    color: 'white',
+                    background: '#198754',
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    
+                });
 
+                // Submit form after 3 seconds
+                setTimeout(() => {
+                    $(this).closest('form').submit();
+                }, 3000); // Waktu sesuai durasi SweetAlert muncul
+            })
+        })
+    </script>
     <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/datatables.css"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.js"></script>
