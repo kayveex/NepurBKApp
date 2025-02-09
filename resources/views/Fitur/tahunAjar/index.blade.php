@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button id="save_tahunAjar" disabled type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
 
@@ -98,4 +98,19 @@
         });
     </script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Cek input form saat nilai berubah
+            $('#tahun_ajar_siswa').on('input', function() {
+                // Jika input tidak kosong, aktifkan tombol
+                if ($(this).val().trim() !== '') {
+                    $('#save_tahunAjar').prop('disabled', false);
+                } else {
+                    // Jika input kosong, nonaktifkan tombol
+                    $('#save_tahunAjar').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 @endpush

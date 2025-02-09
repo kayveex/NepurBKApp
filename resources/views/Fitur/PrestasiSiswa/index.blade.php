@@ -29,7 +29,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="/siswa/prestasi-siswa/store" method="post">
+                                <form id="form_prestasiSiswa" action="/siswa/prestasi-siswa/store" method="post">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group">
@@ -127,7 +127,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button id="save_prestasiSiswa" disabled type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
                                 </form>
                             </div>
@@ -177,7 +177,7 @@
                                                     class="btn btn-warning my-1 px-2">
                                                     <i class="fa-solid fa-user-pen"></i>
                                                 </a>
-                                                <button type="submit" class="btn btn-danger my-1">
+                                                <button id="delete_prestasiSiswa" type="submit" class="btn btn-danger my-1">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
@@ -228,7 +228,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="/siswa/prestasi-siswa/store" method="post">
+                            <form id="form_prestasiSiswa" action="/siswa/prestasi-siswa/store" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
@@ -308,7 +308,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button id="save_prestasiSiswa" type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </form>
                         </div>
@@ -354,7 +354,7 @@
                                                     class="btn btn-warning my-1 px-2">
                                                     <i class="fa-solid fa-user-pen"></i>
                                                 </a>
-                                                <button type="submit" class="btn btn-danger my-1">
+                                                <button id="delete_prestasiSiswa" type="submit" class="btn btn-danger my-1">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </form>
@@ -383,6 +383,8 @@
 @endpush
 
 @push('scripts')
+
+    {{--  Search Nama Siswa --}}
     <script>
         document.getElementById('searchInput').addEventListener('input', function() {
             var input, filter, select, option, a, i;
@@ -401,6 +403,59 @@
             }
         });
     </script>
+
+    {{-- Validator Form Input Prestasi Siswa --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('form_prestasiSiswa');
+            const submitButton = document.getElementById('save_prestasiSiswa');
+    
+            // Pantau perubahan pada semua input, select, dan textarea
+            form.addEventListener('input', function () {
+                // Periksa apakah semua elemen form yang diperlukan telah diisi
+                const allFieldsFilled = Array.from(form.querySelectorAll('input, select, textarea')).every(input => {
+                    // Abaikan input dengan ID #searchInput dan validasi elemen dengan atribut required
+                    if (input.id === 'searchInput') return true;
+                    return input.hasAttribute('required') ? input.value.trim() !== '' : true;
+                });
+    
+                // Aktifkan tombol submit jika semua field terisi, nonaktifkan jika tidak
+                submitButton.disabled = !allFieldsFilled;
+            });
+        });
+    </script>
+
+    {{-- Sweetalert Delete Prestasi Siswa --}}
+    <script type="text/javascript">
+        $(function() {
+            $(document).on('click', '#delete_prestasiSiswa', function(e) {
+                e.preventDefault();
+                // Make a small toast to notify the user that the data has been deleted on right top
+                Swal.fire({
+                    title: 'Prestasi Siswa Telah Dihapus',
+                    icon: 'success',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: false,
+                    color: 'white',
+                    background: '#198754',
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    
+                });
+
+                // Submit form after 3 seconds
+                setTimeout(() => {
+                    $(this).closest('form').submit();
+                }, 3000); // Waktu sesuai durasi SweetAlert muncul
+            })
+        })
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#prestasiSiswaTable').DataTable({
