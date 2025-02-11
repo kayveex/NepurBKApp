@@ -106,7 +106,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label><strong>Upload Foto Siswa (Max: 5 MB)</strong></label>
+                            <label><strong>Upload Foto Profil (Max: 5 MB)</strong></label>
                             <br />
                             <input class="input-file-normal" type="file" name="fotoGuruBK" id="fotoGuruBK" />
                         </div>

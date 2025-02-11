@@ -40,6 +40,24 @@
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
+                                        <label><strong>Klien Siswa</strong></label>
+                                        <div class="input-group">
+                                            <input type="text" id="searchInput" class="form-control"
+                                                placeholder="Cari siswa...">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <select name="siswa_id" id="siswa_id" class="form-control" required> 
+                                            <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
+                                            <!-- Menampilkan pilihan klien siswa -->
+                                            @foreach ($profilSiswa as $siswa)
+                                                <option value="{{ $siswa->id }}">{{ $siswa->namaSiswa }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label><strong>Kelas</strong></label>
                                         <select class="form-control" name="kelas" id="kelas" required>
                                             <option>-- Pilih Kelas --</option>
@@ -122,24 +140,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label><strong>Klien Siswa</strong></label>
-                                        <div class="input-group">
-                                            <input type="text" id="searchInput" class="form-control"
-                                                placeholder="Cari siswa...">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <select name="siswa_id" id="siswa_id" class="form-control" required> 
-                                            <option>-- Buka Untuk Mendapatkan Hasil Search --</option>
-                                            <!-- Menampilkan pilihan klien siswa -->
-                                            @foreach ($profilSiswa as $siswa)
-                                                <option value="{{ $siswa->id }}">{{ $siswa->namaSiswa }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+
                                     <div class="modal-footer">
                                         <button id="submitButton" type="submit" class="btn btn-primary" disabled>Simpan</button>
                                     </div>
