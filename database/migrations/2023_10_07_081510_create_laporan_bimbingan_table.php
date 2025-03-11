@@ -28,8 +28,6 @@ return new class extends Migration
 
             $table->unsignedBigInteger('siswa_id');
             $table->foreign('siswa_id')->references('id')->on('profil_siswa');
-
-        
             $table->timestamps();
         });
     }

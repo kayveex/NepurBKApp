@@ -7,12 +7,8 @@ use App\Http\Controllers\EditProfilGuruController;
 use App\Http\Controllers\EditProfilSiswaController;
 use App\Http\Controllers\LaporanBimbinganController;
 use App\Http\Controllers\PrestasiSiswaController;
-use App\Http\Controllers\ProfilSiswaController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\TAController;
-use App\Http\Controllers\TahunAjarController;
-use App\Models\LaporanBimbingan;
-use App\Models\PrestasiSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
